@@ -1,0 +1,22 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Build output directory
+dist/
+
+# Auto-generated PDFs and HTMLs inside slides directory (keep markdown files)
+slides/**/*.pdf
+slides/**/*.html
+
+# Node / npm
+node_modules/
+npm-debug.log*
+
+# Scratch & temporary files
+scratch/
+.tmp/
+*.tmp
+
+Lecture_Notes.pdf
