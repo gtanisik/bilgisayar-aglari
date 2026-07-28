@@ -2,6 +2,7 @@
 
 SLIDES_DIR = slides
 DIST_DIR = dist
+THEME_CSS = templates/custom-theme.css
 
 MD_FILES = $(shell find $(SLIDES_DIR) -name "*.md" 2>/dev/null)
 PDF_FILES = $(patsubst $(SLIDES_DIR)/%.md, $(DIST_DIR)/%.pdf, $(MD_FILES))
@@ -15,15 +16,13 @@ pdf: $(PDF_FILES)
 
 html: $(HTML_FILES)
 
-THEME_CSS = templates/custom-theme.css
-
-$(DIST_DIR)/%.pdf: $(SLIDES_DIR)/%.md
+$(DIST_DIR)/%.pdf: $(SLIDES_DIR)/%.md $(THEME_CSS)
 	@mkdir -p $(dir $@)
-	marp --theme-set $(THEME_CSS) --pdf $< -o $@
+	marp --no-stdin --allow-local-files $< -o $@ --pdf --theme-set $(THEME_CSS)
 
-$(DIST_DIR)/%.html: $(SLIDES_DIR)/%.md
+$(DIST_DIR)/%.html: $(SLIDES_DIR)/%.md $(THEME_CSS)
 	@mkdir -p $(dir $@)
-	marp --theme-set $(THEME_CSS) $< -o $@
+	marp --no-stdin --allow-local-files $< -o $@ --theme-set $(THEME_CSS)
 
 clean:
 	rm -rf $(DIST_DIR)

@@ -16,9 +16,9 @@ Tüm orijinal slaytlar, diyagramlar, konu anlatım akışı ve fikirler aşağı
 
 ## 2. Türkçe Çeviri ve Uyarlama Lisansı (License for Turkish Content)
 
-Bu depoda oluşturulan Türkçe Marp ders slaytları ve uyarlamalar **[Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE)** lisansı ile lisanslanmıştır.
+Bu depoda oluşturulan Türkçe Marp ders slaytları ve uyarlamalar **[Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE)** lisansı ile [github.com/gtanisik/bilgisayar-aglari](https://github.com/gtanisik/bilgisayar-aglari) deposunda yayınlanmıştır.
 
 ### Bu Lisansa Göre:
 * **Serbestçe Kullanabilirsiniz**: Slaytları derslerinizde, sunumlarınızda ve eğitimlerinizde özgürce kullanabilir, paylaşabilir ve dağıtabilirsiniz.
 * **Değiştirebilirsiniz (Türetebilirsiniz)**: Slaytları düzenleyebilir, yeni içerik ekleyebilir veya kendi müfredatınıza göre uyarlayabilirsiniz.
-* **Atıf (Referans) Şartı**: Slaytları kullandığınızda veya değiştirdiğinizde, **orijinal esere (Prof. Douglas E. Comer - Prentice-Hall)** ve **bu Türkçe uyarlamaya** uygun şekilde atıfta bulunmanız (referans vermeniz) yeterlidir.
+* **Atıf (Referans) Şartı**: Slaytları kullandığınızda veya değiştirdiğinizde, **orijinal esere (Prof. Douglas E. Comer - Prentice-Hall)** ve **bu Türkçe uyarlamaya ([github.com/gtanisik/bilgisayar-aglari](https://github.com/gtanisik/bilgisayar-aglari))** uygun şekilde atıfta bulunmanız (referans vermeniz) yeterlidir.

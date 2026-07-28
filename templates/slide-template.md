@@ -3,7 +3,7 @@ marp: true
 theme: custom-theme
 paginate: true
 header: 'Bilgisayar Ağları ve İnternet'
-footer: '© Douglas E. Comer / Prentice-Hall | Kaynak: netbook.cs.purdue.edu'
+footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 ---
 
 <!-- _class: lead -->
@@ -11,16 +11,18 @@ footer: '© Douglas E. Comer / Prentice-Hall | Kaynak: netbook.cs.purdue.edu'
 ## [Modül / Bölüm Başlığı]
 
 **Prof. Douglas E. Comer**  
-*6. Baskı Ders Notları - Türkçe Çevirisi*
+*6. Baskı Ders Notları - Türkçe Çevirisi ve Uyarlaması*
+
+> Bu ders materyali, Prof. Douglas E. Comer'in *"Computer Networks and Internets, 6th Edition"* (Prentice-Hall / netbook.cs.purdue.edu) eserinden Türkçeye uyarlanarak hazırlanmıştır. Açık kaynak projesi: [github.com/gtanisik/bilgisayar-aglari](https://github.com/gtanisik/bilgisayar-aglari)
 
 ---
 
 # İçindekiler / Gündem
 
-- [ ] Konu 1
-- [ ] Konu 2
-- [ ] Konu 3
-- [ ] Özet ve Değerlendirme
+- **Konu 1**: Genel Açıklama
+- **Konu 2**: Genel Açıklama
+- **Konu 3**: Genel Açıklama
+- **Özet ve Değerlendirme**
 
 ---
 

@@ -4,6 +4,8 @@ Bu depo, Üniversite Bilgisayar Mühendisliği lisans programında okutulacak ol
 
 Slaytlar, Prof. Douglas E. Comer'in **"Computer Networks and Internets (6th Edition)"** kitabının resmi ders notları esas alınarak Türkçeye çevrilmiş ve [Marp (Markdown Presentation Ecosystem)](https://marp.app) formatında düzenlenmiştir.
 
+* **Resmi Depo (Repository)**: [github.com/gtanisik/bilgisayar-aglari](https://github.com/gtanisik/bilgisayar-aglari)
+
 ---
 
 ## 📁 Proje Yapısı
@@ -15,6 +17,7 @@ Slaytlar, Prof. Douglas E. Comer'in **"Computer Networks and Internets (6th Edit
 ├── LICENSE                    # Creative Commons Attribution 4.0 International (CC BY 4.0)
 ├── Makefile                   # Marp PDF/HTML otomatik derleme komutları
 ├── templates/                 # Standart Marp slayt ve CSS şablonu
+│   ├── custom-theme.css
 │   └── slide-template.md
 ├── slides/                    # Türkçe Marp slayt dosyaları (.md)
 │   ├── mod01-introduction/
@@ -57,7 +60,7 @@ make pdf
 make html
 
 # Tek bir slaytı PDF'e dönüştürmek için:
-marp --pdf slides/mod01-introduction/mod01_giris.md -o mod01_giris.pdf
+marp --pdf slides/mod01-introduction/mod01_giris_ve_katmanlama.md -o mod01_giris.pdf
 ```
 
 ---
@@ -77,4 +80,4 @@ marp --pdf slides/mod01-introduction/mod01_giris.md -o mod01_giris.pdf
 ## 📜 Telif Hakkı ve Lisans (Copyright & License)
 
 * **Orijinal Materyal**: Prentice-Hall / Pearson Education ve Prof. Douglas E. Comer'e aittir ([https://netbook.cs.purdue.edu](https://netbook.cs.purdue.edu)).
-* **Türkçe Uyarlama**: Hazırlanan Türkçe slaytlar ve materyaller **[Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE)** lisansı ile açık kaynak olarak sunulmuştur. Başka akademisyenler ve öğrenciler atıf vererek serbestçe kullanabilir ve değiştirebilir. Detaylar için [COPYRIGHT.md](COPYRIGHT.md) dosyasını inceleyiniz.
+* **Türkçe Uyarlama**: Hazırlanan Türkçe slaytlar ve materyaller **[Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE)** lisansı ile açık kaynak olarak [github.com/gtanisik/bilgisayar-aglari](https://github.com/gtanisik/bilgisayar-aglari) adresinde sunulmuştur. Başka akademisyenler ve öğrenciler atıf vererek serbestçe kullanabilir ve değiştirebilir. Detaylar için [COPYRIGHT.md](COPYRIGHT.md) dosyasını inceleyiniz.
