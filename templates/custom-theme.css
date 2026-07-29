@@ -210,3 +210,14 @@ blockquote {
   border-radius: 4px;
   line-height: 1.5;
 }
+
+/* Image Centering Utility */
+img[alt*="center"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+p:has(img[alt*="center"]) {
+  text-align: center;
+}
+

@@ -326,7 +326,7 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 ---
 
-# Katman 1: Fiziksel Katman
+# Katman 1: Fiziksel Katman (Physical Layer)
 
 - Altta yatan iletim ortamları
 - Elektromanyetik enerji ve bunun kullanımı
@@ -337,7 +337,7 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 ---
 
 <!-- _class: compact -->
-# Katman 2: Ağ Arayüz Katmanı
+# Katman 2: Ağ Arayüz Katmanı (Network Interface Layer)
 
 - Bilgisayar ile ağ donanımı arasındaki iletişim
 - Veri bağı (Data Link) veya MAC katmanı olarak da adlandırılır
@@ -350,7 +350,7 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 ---
 
 <!-- _class: compact -->
-# Katman 3: İnternet Katmanı
+# Katman 3: İnternet Katmanı (Internet Layer)
 
 - İnternet üzerindeki bir bilgisayar çifti arasındaki iletişim
 - İnternet paket formatı (datagram / verigram)
@@ -361,7 +361,7 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 ---
 
-# Katman 4: Taşıma Katmanı
+# Katman 4: Taşıma Katmanı (Transport Layer)
 
 - Bir bilgisayardaki uygulama çiftleri arasındaki iletişim
 - Bilgisayardaki birden fazla hedef/uygulama arasında ayrıştırma (Demultiplexing)
@@ -370,7 +370,7 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 ---
 
-# Katman 5: Uygulama Katmanı
+# Katman 5: Uygulama Katmanı (Application Layer)
 
 - Verilerin ve mesajların formatı ve gösterimi
 - Uygulamaların izlediği prosedürler:
@@ -384,15 +384,24 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 <!-- _class: compact -->
 # Katmanlı Protokollerin Çalışma Mantığı
 
-- Bir uygulama mesaj göndermek istediğinde:
-  1. Mesaj en üst katmandan (Uygulama) başlar.
-  2. Aşağı doğru inerken her katman kendi kontrol bilgilerini (Başlık / Header) ekler.
-  3. En altta fiziksel ağ üzerinden sinyal olarak gönderilir.
+- Her bilgisayar, katmanlı protokol kümesinin tamamını içerir.
+- Bir uygulama bir mesaj gönderdiğinde:
+  - Mesaj katmanlı protokoller boyunca aşağıya doğru iner.
+  - İlgili katman bilgi ekler ve bir paket oluşturur.
+  - Bilgisayar nihai paketi iletir.
+- Bir paket ulaştığında:
+  - Paket protokol katmanları boyunca yukarıya doğru çıkar.
+  - İlgili katman gerekli işlemeyi yapar ve paketi bir üst katmana devreder.
+  - Uygulama gönderilen mesajı teslim alır.
 
-- Karşı taraf paketi aldığında:
-  1. Paket yukarı doğru çıkar.
-  2. Her katman ilgili başlığı okur, işler ve çıkarır (Decapsulation).
-  3. Asıl mesaj uygulamaya teslim edilir.
+---
+
+<!-- _class: compact -->
+# Bilgisayardaki Protokol Yazılımlarının Gösterimi
+
+![center height:450px](images/fig_048_protocol_software.png)
+
+- Bir bilgisayardaki protokoller kavramsal bir yığın (stack) şeklinde düzenlenir.
 
 ---
 
@@ -400,14 +409,7 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 İnternet üzerinde hareket eden bir paketin katman katman sarmalanması:
 
-```text
-+-------------------------------------------------------------------+
-| L2 Başlık | L3 Başlık | L4 Başlık | Uygulama Verisi (Payload)     |
-+-------------------------------------------------------------------+
-| Çerçeve   | IP Paket  | Segment   | Mesaj                         |
-| (Frame)   | (Datagram)| (TCP/UDP) |                               |
-+-------------------------------------------------------------------+
-```
+![center width:900px](images/packet_headers_illustration.svg)
 
 - Her katman bir alt katmanın Yükü (Payload) haline gelir.
 
@@ -426,63 +428,66 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 # Katmanlama İlkesinin Görsel Özeti
 
-```text
-KAYNAK BİLGİSAYAR                           HEDEF BİLGİSAYAR
-
-+------------------+   Aynı Mesaj           +------------------+
-| Uygulama Katmanı | <--------------------> | Uygulama Katmanı |
-+------------------+                        +------------------+
-| Taşıma Katmanı   | <--------------------> | Taşıma Katmanı   |
-+------------------+                        +------------------+
-| İnternet Katmanı | <--------------------> | İnternet Katmanı |
-+------------------+                        +------------------+
-| Ağ Arayüzü       | <--------------------> | Ağ Arayüzü       |
-+------------------+                        +------------------+
-        |                                            ^
-        +----------[ Fiziksel Ağ İletimi ]-----------+
-```
+![center height:550px](images/fig_051_layering_principle.png)
 
 ---
 
 # Katmanlamadaki Bazı İnce Karmaşıklıklar
 
-Katmanlama diyagramları soyut ve basitleştirilmiştir. Gerçek sistemlerde bazı özel durumlar vardır:
+- Katmanlama diyagramları soyut ve basitleştirilmiştir.
+- Detaylar ve istisnalar pratik sistemleri karmaşıklaştırır.
+- Dört temel örnek:
+  - Çapraz katman iletişimi (Cross-layer communication)
+  - Katman başına birden fazla protokol (Multiple protocols per layer)
+  - İnternet ortamında katmanlama (Layering in an Internet)
+  - Katmanları birbiriyle iç içe geçiren teknolojiler (Technologies that intertwine layers)
 
-1. Çapraz Katman İletişimi (Cross-Layer Communication):
-   - Örneğin: Taşıma katmanı (TCP), paket boyutunu optimize etmek için alt katmanın Maximum Transmission Unit (MTU) değerini bilmek ister.
-2. Katman Başına Birden Fazla Protokol:
-   - Bir bilgisayarda aynı anda Web, E-posta ve SSH çalışabilir. Ağ tarafında hem Ethernet hem Wi-Fi olabilir.
+---
+
+# Çapraz Katman İletişimi Örneği
+
+- **Temel Olgular (Facts)**:
+  - Bir taşıma protokolü, her bir pakette gönderilecek veri miktarını belirler.
+  - Performansı optimize etmek için paketlerin tam dolu olmasını ister.
+- **Ne Var Ki... (Unfortunately)**:
+  - Maksimum paket boyutunu bulmak için taşıma protokolünün bir alt katmanla etkileşime girmesi gerekir.
+
+---
+
+# Katman Başına Birden Fazla Protokol
+
+- Tipik bir bilgisayarı düşünün:
+- Kullanıcı aynı anda birden fazla uygulama çalıştırabilir:
+  - E-posta (Email)
+  - Web tarayıcısı (Web browser)
+- Bilgisayar birden fazla fiziksel ağa bağlanabilir:
+  - Kablolu Ethernet
+  - Wi-Fi kablosuz ağ
+- Diğer katmanlar da benzer şekilde birden fazla protokole sahiptir.
 
 ---
 
 <!-- _class: compact -->
 # Katman Başına Birden Fazla Protokol Görseli
 
-```text
-[ Uygulama ]  -->  Web (HTTP)      E-Posta (SMTP)     DNS
-                       \                /              |
-[ Taşıma   ]  -->     TCP (Güvenilir)             UDP (Hızlı)
-                           \                     /
-[ İnternet  ]  -->        IPv4                IPv6
-                             \                /
-[ Ağ Arayüz]  -->      Ethernet (Kablolu)   Wi-Fi (Kablosuz)
-```
+![center height:550px](images/fig_060_multiple_protocols.png)
+
+---
+
+# İnternet Ortamında Katmanlama
+
+- Katmanlama diyagramlarımız şimdiye kadar yalnızca bir ağa bağlı iki bilgisayarı göstermektedir.
+- Gerçek İnternet ise yönlendiriciler (router) ile birbirine bağlanan birden fazla ağdan oluşur.
+- Yönlendiriciler, paketleri İnternet üzerinden iletmek için yalnızca 2. ve 3. katman yazılımlarına ihtiyaç duyar.
 
 ---
 
 # İnternet Üzerinde Yönlendiricilerin Katman Yapısı
 
-- İki uç bilgisayar (Host A ve Host B) tüm katmanlara (1-5) sahiptir.
-- Aradaki Yönlendiriciler (Router) ise paketleri yönlendirmek için yalnızca 1., 2. ve 3. katman yazılımlarına ihtiyaç duyar.
+![center height:350px](images/fig_062_router_layering.png)
 
-```text
-[ Host A ]             [ Router ]             [ Host B ]
-Uygulama                                      Uygulama
-Taşıma                                        Taşıma
-İnternet ------------> İnternet ------------> İnternet
-Ağ Arayüzü -----------> Ağ Arayüzü -----------> Ağ Arayüzü
-Fiziksel ------------> Fiziksel -------------> Fiziksel
-```
+- Pratikte yönlendiriciler yalnızca paket iletmekten daha fazlasını yapabilir.
+- Detaylarını dersin ilerleyen bölümlerinde inceleyeceğiz.
 
 ---
 
@@ -492,6 +497,13 @@ Fiziksel ------------> Fiziksel -------------> Fiziksel
   - Bir Katman 3 protokolünün (örn. IPv6) başka bir Katman 3 protokolü (örn. IPv4) içinde taşınması.
 - Sanal Özel Ağlar (VPN - Virtual Private Networks):
   - IP paketlerinin şifrelenerek tekrar IP paketleri içinde kapsüllenerek gönderilmesi.
+
+---
+
+<!-- _class: compact -->
+# VPN Tarafından Kullanılan Katmanlama Gösterimi
+
+![center height:550px](images/fig_064_vpn_layering.png)
 
 ---
 
