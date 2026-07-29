@@ -275,9 +275,12 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 # Protokol Tasarımı Neden Zordur?
 
-- Protokolün birden fazla farklı uyarlaması (implementation) olacaktır.
-- Yazılımcılar veya mühendisler standart belgesini yanlış yorumlayabilir.
-- Ağ üzerinde paket kayıpları, gecikmeler ve hatalar meydana gelebilir.
+- Bir protokolün birden fazla farklı uyarlaması (implementation) var olacaktır.
+- Uyarlamalar birden fazla farklı kişi veya kuruluş tarafından oluşturulacaktır.
+- Dikkate alınması gereken çok sayıda ayrıntı vardır.
+- **Kritik Ödünleşim (Key Tradeoff)**:
+  - Olası tüm ayrıntıları zorunlu kılan bir spesifikasyon uyarlamaları kısıtlar.
+  - Yeterli ayrıntı belirtmeyen bir spesifikasyon ise belirsizdir ve birbiriyle uyumsuz uyarlamalara yol açar.
 
 ---
 
