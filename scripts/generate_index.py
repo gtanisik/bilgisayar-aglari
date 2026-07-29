@@ -2,6 +2,7 @@
 import os
 import re
 import glob
+import shutil
 
 DIST_DIR = "dist"
 INDEX_FILE = os.path.join(DIST_DIR, "index.html")
@@ -15,6 +16,21 @@ MODULE_TITLES = {
     "mod06-other-topics": "Modül 6: Ağ Güvenliği ve Yönetimi",
     "mod07-emerging-tech": "Modül 7: Gelişen Teknolojiler",
 }
+
+def copy_assets():
+    slides_dir = "slides"
+    if not os.path.exists(slides_dir):
+        return
+    for root, dirs, files in os.walk(slides_dir):
+        rel_path = os.path.relpath(root, slides_dir)
+        target_dir = os.path.join(DIST_DIR, rel_path) if rel_path != "." else DIST_DIR
+        for f in files:
+            if not f.endswith(".md") and not f.startswith("."):
+                os.makedirs(target_dir, exist_ok=True)
+                src_file = os.path.join(root, f)
+                dst_file = os.path.join(target_dir, f)
+                shutil.copy2(src_file, dst_file)
+                print(f"Copied asset: {src_file} -> {dst_file}")
 
 def get_slide_info(html_path):
     rel_path = os.path.relpath(html_path, DIST_DIR)
@@ -49,6 +65,8 @@ def get_slide_info(html_path):
 
 def main():
     os.makedirs(DIST_DIR, exist_ok=True)
+    copy_assets()
+
     html_files = glob.glob(os.path.join(DIST_DIR, "**", "*.html"), recursive=True)
     slides = []
     for f in sorted(html_files):
