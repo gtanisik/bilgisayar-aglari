@@ -1,9 +1,13 @@
 # Bilgisayar Ağları ve İnternet - Türkçe Ders Slaytları
 
+[![Deploy Marp Slides to GitHub Pages](https://github.com/gtanisik/bilgisayar-aglari/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/gtanisik/bilgisayar-aglari/actions/workflows/deploy-pages.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Slides-38bdf8?style=flat&logo=github)](https://gtanisik.github.io/bilgisayar-aglari/)
+
 Bu depo, Üniversite Bilgisayar Mühendisliği lisans programında okutulacak olan **Bilgisayar Ağları ve İnternet** dersi için hazırlanmış Türkçe sunum slaytlarını içermektedir.
 
 Slaytlar, Prof. Douglas E. Comer'in **"Computer Networks and Internets (6th Edition)"** kitabının resmi ders notları esas alınarak Türkçeye çevrilmiş ve [Marp (Markdown Presentation Ecosystem)](https://marp.app) formatında düzenlenmiştir.
 
+* **🌐 Canlı Sunum Portalı**: [gtanisik.github.io/bilgisayar-aglari](https://gtanisik.github.io/bilgisayar-aglari/)
 * **Resmi Depo (Repository)**: [github.com/gtanisik/bilgisayar-aglari](https://github.com/gtanisik/bilgisayar-aglari)
 
 ---
@@ -67,7 +71,7 @@ marp --pdf slides/mod01-introduction/mod01_giris_ve_katmanlama.md -o mod01_giris
 
 ## 📚 Ders Modülleri (Course Modules)
 
-- **Modül 1**: Giriş, Ders Özeti, Protokoller ve Katmanlı Mimari
+- **Modül 1**: Giriş, Ders Özeti, Protokolcülük ve Katmanlı Mimari — [💻 Canlı Sunum](https://gtanisik.github.io/bilgisayar-aglari/mod01-introduction/mod01_giris_ve_katmanlama.html)
 - **Modül 2**: Ağ Programlama ve Uygulama Katmanı (Soketler, HTTP, DNS, SMTP)
 - **Modül 3**: Veri İletişimi Temelleri ve Fiziksel Katman (Sinyaller, İletim, Modülasyon)
 - **Modül 4**: Veri Bağı Katmanı, LAN, Ethernet, Wi-Fi, Köprüleme ve L2 Anahtarlama
