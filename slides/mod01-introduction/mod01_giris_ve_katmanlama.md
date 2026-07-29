@@ -127,30 +127,30 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 # Bir Ağ Nasıl Yapılandırılmalıdır?
 
 1. Erken Dönem Telefon Şirketlerinin Yaklaşımı:
-   - *"Veri iletişimi telefon aramalarına benzer."*
+   - Veri iletişimi telefon aramalarına benzer.
    - Farklı veri hizmetleri tasarlayıp sunacağız.
    - Ücretlendirme mesafeye ve süreye bağlı olacaktır.
-   - *"Size sadece 128 Kbps yeterlidir!"*
+   - Sadece 128 Kbps yeterlidir!
 
 ---
 
 # Bir Ağ Nasıl Yapılandırılmalıdır? (Devam)
 
 2. Erken Dönem Bilgisayar Üreticilerinin Yaklaşımı:
-   - *"Ağ, kurumunuzdaki bilgisayarları birbirine bağlar."*
+   - Ağ, kurumunuzdaki bilgisayarları birbirine bağlar.
    - Gerekli tüm donanım ve yazılımı biz üreteceğiz.
-   - *"Sadece bizim bilgisayarlarımızı bağlamanız yeterlidir."*
-   - *"Sadece bizim uygulamalarımızı çalıştırmanız yeterlidir."*
+   - Sadece bizim bilgisayarlarımızı bağlamanız yeterlidir.
+   - Sadece bizim uygulamalarımızı çalıştırmanız yeterlidir.
 
 ---
 
 # Bir Ağ Nasıl Yapılandırılmalıdır? (Devam)
 
 3. Erken Dönem Ağ Donanımı Üreticilerinin Yaklaşımı:
-   - *"Ağ, bilgisayarlardan bağımsızdır."*
+   - Ağ, bilgisayarlardan bağımsızdır.
    - Bilgisayarları ağa bağlayan donanım ve ağ arayüzlerini biz üreteceğiz.
    - İşletim sisteminiz için cihaz sürücüleri (device drivers) yazacağız.
-   - *"Sadece bizim ağımızı kullanmanız yeterlidir!"*
+   - Sadece bizim ağımızı kullanmanız yeterlidir!
 
 ---
 
@@ -446,10 +446,10 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 # Çapraz Katman İletişimi Örneği
 
-- **Temel Olgular (Facts)**:
+- Temel olgular:
   - Bir taşıma protokolü, her bir pakette gönderilecek veri miktarını belirler.
   - Performansı optimize etmek için paketlerin tam dolu olmasını ister.
-- **Ne Var Ki... (Unfortunately)**:
+- Ne var ki...:
   - Maksimum paket boyutunu bulmak için taşıma protokolünün bir alt katmanla etkileşime girmesi gerekir.
 
 ---
