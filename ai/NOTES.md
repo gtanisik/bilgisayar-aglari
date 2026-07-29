@@ -64,3 +64,36 @@ Ders materyalinde çeviri tutarlılığını sağlamak amacıyla belirlenen teme
      ```
   3. Slaytlarda kullanım: `::: include templates/common-header.md :::`
 
+---
+
+## 4. Slayt Hazırlama, İçerik ve Görsel Standartları (Modül 1 Deneyimleri & Kurallar)
+
+Gelecek tüm modüllerde (Modül 2 - 7) strictly uygulanacak temel tasarım ve içerik prensipleri:
+
+### A. Şekil ve Görsel Yönetimi Standartları
+1. **ASCII / Metin Diyagramları Kesinlikle YASAK**: Şemalar ve mimari çizimler için asla ASCII art (`+----+`, ````text`) veya kod bloğu metinleri kullanılmayacaktır.
+2. **Yüksek Çözünürlüklü Orijinal Görseller (300 DPI PNG)**:
+   - Şema ve 3D diyagramlarda orijinal detay kaybını ve karmaşıklığı önlemek adına Prof. Douglas Comer'in orijinal ders PDF'inden kırpılan görseller tercih edilmelidir.
+   - Görseller PDF'ten varsayılan 150 DPI yerine **300 DPI (`pdftoppm -r 300`)** piksel yoğunluğuyla alınarak kesinlikle bulanıklaşma/pikselleşme olmamalıdır.
+3. **Şeffaf / Saydam Arka Plan (Transparent RGBA)**:
+   - PDF'ten kesilen görsellerin fon renkleri Python (`PIL`) ile saydamlaştırılarak Marp slayt arka planıyla (`#f8f9fa`) pürüzsüz bütünleşmesi sağlanmalıdır.
+4. **Görüntü İşleme ile Netleştirme & Doygunluk**:
+   - Resimlerdeki çizgiler ve yazılar soluk görünmemeli; renk doygunluğu artırılmalı ve kenar keskinleştirme filtresi (`ImageFilter.SHARPEN`) uygulanmalıdır.
+5. **Yatayda Ortalanma ve Eksiksiz Kırpma**:
+   - Tüm görseller slaytta `![center height:...](images/...)` etiketiyle yatayda tam ortalanmalıdır.
+   - Şekil kırpılırken alttaki bulutlar, oklar veya bağlam elemanları asla yarıda kesilmemelidir.
+6. **Yalın Vektörel SVG Çizimleri**:
+   - Orijinal görsel yerine Türkçe SVG kullanılacaksa oklar metinlerin (`Payload` vb.) veya harflerin üzerinden geçmemeli, metnin etrafından dolaşmalıdır.
+
+### B. İçerik ve Slayt Yapısına Birebir Sadakat
+1. **Gereksiz Özetleme ve Birleştirmeden Kaçınma**:
+   - Orijinal PDF'teki slayt dizilimi ve sayfa yapısı birebir korunmalıdır. Ayrı ayrı duran anlatım slaytları tek bir özette birleştirilmemeli; her biri kendi başlığı ve detaylı maddeleriyle Türkçe slayt olarak sunulmalıdır.
+2. **Biçimlendirme ve Liste Tutarlılığı**:
+   - Liste maddelerinde keyfi tırnak işaretleri (`"..."`) kullanılmamalıdır. Orijinaldeki gibi temiz, tırnaksız ve tutarlı font/girinti yapısı tercih edilmelidir.
+3. **Telif / Kaynak Gösterimi**:
+   - Slayt alt bilgisinde (footer) bulunan `Adapted from D. E. Comer (Prentice-Hall)` ifadesi tüm uyarlama metinler ve görseller için akademik standartlara tam uygundur ve yeterlidir.
+
+### C. Temiz Proje Yapısı (Clean Repository)
+- Slaytlarda artık kullanılmayan veya yerini PNG'ye bırakan eski SVG/görsel dosyaları proje klasöründe (`images/`) kalıntı olarak bırakılmamalı, anında temizlenmelidir (`rm`).
+
+
