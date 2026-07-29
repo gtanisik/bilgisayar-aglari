@@ -241,13 +241,15 @@ Geçmişte üreticiye bağımlı olarak geliştirilen ticari ağlar:
 
 ---
 
-# Protokol Nedir?
+# Protokol (Protocol)
 
-- Protokol (Protocol):
-  - İletişimin belirli bir boyutunun/yönünün nasıl ele alınacağını belirten kurallar kümesidir.
-
-> [!NOTE]
-> Bir protokol, verinin formatını, gönderilme sırasını, hata durumunda ne yapılacağını ve yanıt mekanizmalarını adım adım tanımlar.
+- Her bir protokol, iletişimin belirli bir yönünün nasıl ele alınacağını belirtir.
+- Bir protokol şunları belirtebilir:
+  - Voltaj ve frekans gibi alt seviye (fiziksel) detaylar.
+  - Kullanıcının gördüğü biçim/format gibi üst seviye detaylar.
+- Çok sayıda bireysel iletişim protokol standardı mevcuttur.
+- Birlikte çalışmak üzere tasarlanmış protokol kümesine **Protokol Takımı / Kümesi (Protocol Suite)** denir.
+  - Örnek: TCP/IP İnternet protokol takımı (TCP/IP Internet protocol suite).
 
 ---
 
