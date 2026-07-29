@@ -94,6 +94,6 @@ Gelecek tüm modüllerde (Modül 2 - 7) strictly uygulanacak temel tasarım ve i
    - Slayt alt bilgisinde (footer) bulunan `Adapted from D. E. Comer (Prentice-Hall)` ifadesi tüm uyarlama metinler ve görseller için akademik standartlara tam uygundur ve yeterlidir.
 
 ### C. Temiz Proje Yapısı (Clean Repository)
-- Slaytlarda artık kullanılmayan veya yerini PNG'ye bırakan eski SVG/görsel dosyaları proje klasöründe (`images/`) kalıntı olarak bırakılmamalı, anında temizlenmelidir (`rm`).
+- Slaytlarda artık kullanılmayan veya yerini PNG'ye bırakan eski SVG/görsel dosyaları, çalışma esnasında kazaen silme riskini önlemek adına **`git commit` veya `git push` öncesinde kontrol edilerek** proje klasöründen (`images/`) temizlenmelidir.
 
 
