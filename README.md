@@ -20,10 +20,15 @@ Slaytlar, Prof. Douglas E. Comer'in **"Computer Networks and Internets (6th Edit
 ├── COPYRIGHT.md               # Telif hakkı ve lisans bildirimleri
 ├── LICENSE                    # Creative Commons Attribution 4.0 International (CC BY 4.0)
 ├── Makefile                   # Marp PDF/HTML otomatik derleme komutları
+├── .github/                   # CI/CD Otomasyon yapılandırması
+│   └── workflows/
+│       └── deploy-pages.yml   # GitHub Pages otomatik yayınlama iş akışı
+├── scripts/                   # Yardımcı derleme betikleri
+│   └── generate_index.py      # HTML portal indeksi & medya kopyalayıcı
 ├── templates/                 # Standart Marp slayt ve CSS şablonu
 │   ├── custom-theme.css
 │   └── slide-template.md
-├── slides/                    # Türkçe Marp slayt dosyaları (.md)
+├── slides/                    # Türkçe Marp slayt dosyaları (.md ve görseller)
 │   ├── mod01-introduction/
 │   ├── mod02-applications/
 │   ├── mod03-physical-layer/
