@@ -15,6 +15,7 @@ all: pdf html
 pdf: $(PDF_FILES)
 
 html: $(HTML_FILES)
+	python3 scripts/generate_index.py
 
 $(DIST_DIR)/%.pdf: $(SLIDES_DIR)/%.md $(THEME_CSS)
 	@mkdir -p $(dir $@)
