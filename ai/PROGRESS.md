@@ -21,7 +21,7 @@ Durum Simgeleri:
 
 | Modül | Başlık / Konu | Orijinal Slayt Sayısı | Hedef Slayt Dosyası | Durum | Notlar |
 |---|---|---|---|---|---|
-| **Modül 1** | Giriş, Ders Özeti, Protokoller ve Katmanlama | 74 | `slides/mod01-introduction/mod01_giris_ve_katmanlama.md` | 🟡 Gözden Geçiriliyor | Çeviri ve 3B SVG çizim tamamlandı. Görsel/grafik revizyonları için inceleme süreci devam ediyor. |
+| **Modül 1** | Giriş, Ders Özeti, Protokoller ve Katmanlama | 74 | `slides/mod01-introduction/mod01_giris_ve_katmanlama.md` | 🟢 Tamamlandı | Slayt yapısı, terimler, şeffaf orijinal görseller (VPN dahil) ve temiz dizin yapısı ile tamamlandı. |
 | **Modül 2** | Ağ Programlama ve Uygulama Katmanı | 98 | `slides/mod02-applications/mod02_uygulama.md` | 🔴 Henüz Başlamadı | Soketler, HTTP, DNS, SMTP, FTP |
 | **Modül 3** | Veri İletişimi Temelleri ve Fiziksel Katman | 89 | `slides/mod03-physical-layer/mod03_fiziksel.md` | 🔴 Henüz Başlamadı | Sinyaller, İletim Ortamları, Modülasyon |
 | **Modül 4** | Veri Bağı Katmanı, LAN, Ethernet, Wi-Fi | 180 | `slides/mod04-datalink-layer/mod04_veribagi.md` | 🔴 Henüz Başlamadı | Çerçeveleme, Köprüleme, L2 Anahtarlama |
@@ -32,5 +32,6 @@ Durum Simgeleri:
 ---
 
 ## Güncelleme Günlüğü (Changelog)
+* **2026-07-29**: Modül 1 görsel ve slayt yapısı revize edildi. Kullanılmayan SVG dosyaları temizlendi, tüm şekiller şeffaf background PNG olarak entegre edildi, VPN katmanlama slaytı eklendi ve 57-62. PDF slayt yapısı birebir korundu.
 * **2026-07-28**: Modül 1 Türkçe Marp slaytları (`slides/mod01-introduction/mod01_giris_ve_katmanlama.md`) tamamlandı. 3B İnternet Referans Modeli SVG çizimi üretildi, Marp yerel görsel desteği (`--allow-local-files`) Makefile'a eklendi ve `make all` ile güncel PDF/HTML derlemeleri sağlandı.
 * **2026-07-27**: Proje yapısı, Ana Plan (`MASTER_PLAN.md`), İlerleme Belgesi (`PROGRESS.md`), Terimler Sözlüğü (`NOTES.md`) ve Marp Şablonu (`templates/slide-template.md`) oluşturuldu.
