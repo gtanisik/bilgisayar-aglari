@@ -22,7 +22,7 @@ Durum Simgeleri:
 | Modül | Başlık / Konu | Orijinal Slayt Sayısı | Hedef Slayt Dosyası | Durum | Notlar |
 |---|---|---|---|---|---|
 | **Modül 1** | Giriş, Ders Özeti, Protokoller ve Katmanlama | 74 | `slides/mod01-introduction/mod01_giris_ve_katmanlama.md` | 🟢 Tamamlandı | Slayt yapısı, terimler, şeffaf orijinal görseller (VPN dahil) ve temiz dizin yapısı ile tamamlandı. |
-| **Modül 2** | Ağ Programlama ve Uygulama Katmanı | 98 | `slides/mod02-applications/mod02_uygulama.md` | 🔴 Henüz Başlamadı | Soketler, HTTP, DNS, SMTP, FTP |
+| **Modül 2** | Ağ Programlama ve Uygulama Katmanı | 98 | `slides/mod02-applications/mod02_uygulama.md` | 🟡 Gözden Geçiriliyor | Soketler, HTTP, DNS, SMTP, FTP, P2P. 300 DPI şeffaf görseller ve Türkçe Marp slaytları hazırlandı. |
 | **Modül 3** | Veri İletişimi Temelleri ve Fiziksel Katman | 89 | `slides/mod03-physical-layer/mod03_fiziksel.md` | 🔴 Henüz Başlamadı | Sinyaller, İletim Ortamları, Modülasyon |
 | **Modül 4** | Veri Bağı Katmanı, LAN, Ethernet, Wi-Fi | 180 | `slides/mod04-datalink-layer/mod04_veribagi.md` | 🔴 Henüz Başlamadı | Çerçeveleme, Köprüleme, L2 Anahtarlama |
 | **Modül 5** | İnternet Çalışması: IP, Yönlendirme, Taşıma Katmanı | 326 | `slides/mod05-internetworking/mod05_internetworking.md` | 🔴 Henüz Başlamadı | IP, Subnetting, IPv6, UDP, TCP, BGP/OSPF |
