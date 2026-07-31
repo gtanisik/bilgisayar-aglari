@@ -7,7 +7,7 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 ---
 
 <!-- _class: lead -->
-# Modül 2: Uygulama Katmanı ve Ağ Programlama
+# Modül 2: Ağ Programlama ve Uygulama Katmanı
 
 ## Uygulama Katmanı Protokolleri, Soket API ve Ağ Mimarileri
 
@@ -17,187 +17,354 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 
 # Modül 2 Konu Başlıkları
 
-- İletişim Paradigmaları (Akış vs Mesaj Modeli)
-- İstemci-Sunucu (Client-Server) İletişim Modeli
-- İstemci-Sunucu Alternatifleri ve P2P Mimarisi
-- Soket API ve Ağ Programlama
-- Web ve HTTP Protokolü (İstek/Yanıt Formatları)
-- E-Posta Mimarisi ve Protokolleri (SMTP, POP3, IMAP, MIME)
-- Dosya Aktarımı (FTP Mimarisi)
-- Alan Adı Sistemi (DNS - Domain Name System)
+- İnternet Hizmetleri ve İletişim Paradigmaları
+- İstemci-Sunucu Modeli ve Alternatifleri
+- Basitleştirilmiş Bir API ile Ağ Programlama
+- Soket API (The Socket API)
+- Uygulama Katmanı Protokolleri
+- Standart Uygulama Protokolü Örnekleri
 
 ---
 
 <!-- _class: lead -->
-# Bölüm 2.1: İletişim Paradigmaları ve Genel İlkeler
+# Bölüm 2.1: İnternet Hizmetleri ve İletişim Paradigmaları
 
 ---
 
-# Temel İlke: Zekanın Ağ Uçlarında Olması
+# Genel İlke: Zekanın Ağ Uçlarında Olması
 
-- **Uç Sistemlerde Zeka (Intelligence At The Edge)**:
-  - İnternet'in temel tasarım ilkesi: Ağ çekirdeği basit paket iletimi yapar; karmaşık uygulama mantığı ve zeka uç sistemlerde (host) çalışır.
-  - Uygulama katmanı protokolleri uç sistemlerde çalışan yazılımlar tarafından yürütülür.
-  - İnternet altyapısı yeni bir uygulama eklendiğinde değiştirilmek zorunda kalmaz.
+- İnternet doğrudan hizmet sunmaz; yalnızca iletişim sağlar. Tüm hizmetleri uygulama programları sunar.
+- Sonuç:
+  - Sesli ve görüntülü telekonferans dahil tüm İnternet iletişimi, uygulama programları arasındaki iletişimden ibarettir.
+  - Ağ çekirdeği basit paket iletimi yapar; karmaşık uygulama mantığı uç sistemlerde (host) çalışır.
+  - Yeni bir uygulama eklendiğinde ağ altyapısının değiştirilmesi gerekmez.
 
 ---
 
-# Temel İletişim Paradigmaları
+# İletişim Paradigmaları Karşılaştırması
 
-Ağ uygulamaları geliştirmek için iki ana iletişim paradigması mevcuttur:
+İnternet iki temel iletişim paradigması sunar:
 
-1. **Akış Modeli (Stream Paradigm / TCP)**:
-   - Bağlantı tabanlıdır (connection-oriented).
-   - Veri sürekli bir bayt akışı olarak iletilir.
-2. **Mesaj Modeli (Message Paradigm / UDP)**:
-   - Bağlantısızdır (connectionless).
-   - Veri bağımsız paketler/mesajlar halinde gönderilir.
+| Özellik | Akış Modeli (Stream - TCP) | Mesaj Modeli (Message - UDP) |
+|---|---|---|
+| **Bağlantı Yapısı** | Bağlantı Tabanlı (Connection-oriented) | Bağlantısız (Connectionless) |
+| **Etkileşim Türü** | Bire-bir İletişim | Bire-bir, Birden-çoğa, Birden-herkese |
+| **Veri Birimi** | Bireysel Bayt Dizisi | Bağımsız Mesaj Dizisi |
+| **Veri Boyutu** | Değişken / Rastgele Uzunluk | Mesaj Başına Maks. 64 KB |
+| **Kullanım Alanı** | Çoğu Standart Uygulama (Web, E-posta) | Çoklu Ortam (Ses/Video, Oyun) |
+| **Temel Protokol** | TCP Protokolü | UDP Protokolü |
+
+- **Not**: Her iki paradigmanın da ilk bakışta şaşırtıcı gelen davranış özellikleri vardır.
 
 ---
 
 # Akış Modeli (Stream Paradigm - TCP)
 
-- 1-e-1 iletişim (bir istemci ile bir sunucu arası).
-- İletişim kurulmadan önce bağlantı açılmalıdır.
-- Kesintisiz bayt akışı (stream of bytes) sağlar:
-  - Gönderilen bayt dizisi ile alınan bayt dizisi birebir aynıdır.
-- Veri sınırları korunmaz (gönderilen mesaj boyutları birleştirilebilir veya bölünebilir).
-- Güvenilir iletim sağlar (kaybolan paketler tekrar gönderilir).
+- Bir dizi baytı aktarır.
+- Bağlantı tabanlıdır: Veri iki uygulama arasında gönderilir.
+- İki yönlüdür (her iki yönde birer akış mevcuttur).
+- Veriye herhangi bir anlam yüklenmez ve veri içine sınırlar yerleştirilmez.
+- **Şaşırtıcı Özellik**:
+  - Tüm baytları sırasıyla ulaştırmasına rağmen, akış modeli alıcı uygulamaya teslim edilen bayt bloklarının gönderici uygulama tarafından gönderilen bloklara karşılık geleceğini garanti etmez.
 
 ---
 
 # Mesaj Modeli (Message Paradigm - UDP)
 
-- 1-e-1, 1-e-Çok (Multicast) veya 1-e-Herkes (Broadcast) destekler.
-- İletişim öncesi bağlantı kurulumu gerektirmez.
-- Veri sınırları kesin olarak korunur:
-  - Bir mesaj gönderildiğinde, alıcı tam olarak o boyutta tek bir mesaj alır.
-- Güvenilirlik garantisi yoktur (paketler kaybolabilir, sırasız gelebilir veya yinelenebilir).
-- Mesaj boyutu genellikle maksimum paket boyutu ile sınırlıdır (örn. 64 KB).
+- Bağlantısızdır: Ağ, bağımsız mesajları kabul eder ve iletir.
+- Gönderici bir mesaja N bayt yerleştirirse, alıcı gelen mesajda tam olarak N bayt bulur.
+- Tekli yayın (unicast), çoklu yayın (multicast) veya genel yayın (broadcast) iletimini destekler.
+- **Şaşırtıcı Özellik**:
+  - Sınırları korumasına rağmen mesaj modeli paketlerin kaybolmasına, yinelenmesine veya sırasız teslim edilmesine izin verir; bu tür hatalar oluştuğunda ne göndericiye ne de alıcıya bilgi verilir.
 
 ---
 
-# Akış Taşıma ve Veri Parçalanması (Data Chunks)
+# Akış Taşıma (Stream Transport) ve Veri Blokları (Data Chunks)
 
-![center height:300px](images/fig_084_stream_chunks.png)
-
-- Akış modelinde uygulama veriyi rastgele boyutlarda yazar.
-- Ağ yazılımı bu veriyi uygun boyutlu bloklara/parçalara ayırarak paketler.
-- Alıcı uygulama veriyi tek bir okumada alabileceği gibi parça parça da okuyabilir.
-
----
-
-# Mesaj Modeli ve Mesaj Sınırları
-
-![center height:300px](images/fig_085_message_boundaries.png)
-
-- Mesaj modelinde her bir mesaj ağ üzerinden bağımsız bir birim olarak iletilir.
-- Alıcı uygulama tam olarak gönderilen mesaj boyutu kadar tek bir birim alır.
-- Mesaj sınırları ağ katmanında kesinlikle korunur.
+- Protokol sistemi şunları yapabilir:
+  - Göndericiden gelen veriyi birden fazla segmente bölebilir ve alıcıya her defasında birkaç bayt teslim edebilir.
+  - Birden fazla iletimden gelen veriyi tek bir büyük blokta birleştirip alıcıya hepsini tek seferde teslim edebilir.
+- **Sonuç**: Alıcı uygulama hangi parçaların gönderildiğini tam olarak bilemez.
 
 ---
 
-<!-- _class: lead -->
-# Bölüm 2.2: İstemci-Sunucu Modeli ve Mimariler
+# Örnek #1
+
+- İki uygulama arasında bir akış bağlantısı olduğunu varsayalım.
+- Gönderici:
+  - `buf` tamponuna 1000 baytlık mesaj yerleştirir.
+  - 1000 baytın tamamını göndermek için tek bir istekte bulunur.
+- Alıcı:
+  - 1000 baytlık bir `b` tamponu ayırır.
+  - Akıştan `b` tamponuna 1000 bayt okuma isteğinde bulunur.
+- İşletim sistemi 1 ile 1000 bayt arasında bir miktar döndürebilir.
+- Uygulama, 1000 baytın tamamı alınana kadar ard arda çağrılar yapmalıdır.
 
 ---
 
-# İstemci-Sunucu (Client-Server) Etkileşim Modeli
+# Örnek #2
 
-- İnternet üzerindeki uygulamaların ezici çoğunluğu **İstemci-Sunucu** mimarisini kullanır.
-- İki taraf farklı rollere sahiptir:
-  - **İstemci (Client)**: Hizmet talep eden taraf (iletişimi başlatan).
-  - **Sunucu (Server)**: Hizmeti sunan ve istekleri bekleyen taraf.
-
----
-
-# İstemcinin Temel Özellikleri
-
-- Geçici olarak çalışır (kullanıcı başlattığında).
-- İletişimi başlatan taraftır (active opener).
-- Sunucunun adresini (IP ve Port numarası) önceden bilmek zorundadır.
-- Genellikle sıradan kullanıcı bilgisayarlarında (PC, akıllı telefon) çalışır.
-- İşi bittiğinde sonlanabilir.
+- İki uygulama arasında bir akış bağlantısı olduğunu varsayalım.
+- Gönderici, her biri 100 bayt uzunluğunda 4 mesajlık bir dizi iletir.
+- Alıcı 1000 baytlık büyük bir `b` tamponu ayırır ve akıştan `b` tamponuna 1000 bayta kadar okuma yapılmasını ister.
+- İşletim sistemi tek bir okuma isteğinde 4 mesajın tamamını (400 bayt) döndürmeyi seçebilir.
+- Alıcı uygulama, gelen veriyi 4 ayrı mesaja kendisi ayırabilmelidir.
 
 ---
 
-# Sunucunun Temel Özellikleri
+# Programlama İpuçları
 
-- Sürekli (7/24) çalışır (daemon / service).
-- İsteklerin gelmesini pasif olarak bekler (passive opener).
-- Önceden tanımlı sabit bir Port numarasında dinleme yapar (well-known port).
-- Aynı anda birden fazla istemciye hizmet verebilir (concurrent server).
-- Genellikle yüksek performanslı sunucu sınıfı bilgisayarlarda çalışır.
-
----
-
-# İstemci ve Sunucu Etkileşim Adımları
-
-![center height:320px](images/fig_105_client_server_steps.png)
-
-- İstemci ve sunucu önceden bir port numarası üzerinde anlaşır.
-- Sunucu pasif olarak dinlemeye başlar; istemci aktif olarak bağlantı kurar.
+- **Akış Modeli (TCP) Kullanırken**:
+  - Alıcının bir mesajın nerede bittiğini anlayacağı bir yöntem geliştirin.
+  - Mesajın tamamı alınana kadar soketten okuma yapmaya devam edin.
+- **Mesaj Modelini (UDP) Kullanmayı Düşünürken**:
+  - Kullanmayın (en azından henüz değil).
 
 ---
 
 <!-- _class: compact -->
-# İstemci-Sunucu Alternatifleri ve P2P
+# Bir Akış İçinde Bireysel Mesajları Belirleme
 
-- **Yayın (Broadcast)**:
-  - Gönderici mesajı tüm ağa yayınlar; her istasyon alır. Ölçeklenmesi zordur.
-- **Paylaşılan Dosya Sistemi (Shared File System)**:
-  - Merkezi dosya sunucusu üzerinden iletişim. Birden fazla erişimde kilitlenme sorunları yaşanabilir.
-- **Noktadan Noktaya (Peer-to-Peer / P2P)**:
-  - Merkezi sunucu ihtiyacını ortadan kaldırır.
-  - Her bir düğüm (peer) hem istemci hem de sunucu gibi davranır.
-  - Dosya paylaşımı (BitTorrent vb.) ve dağıtık sistemlerde yaygındır.
+- **Olasılıklar / Yöntemler**:
+  - Tek bir mesaj gönderip ardından dosya sonu (EOF) kapatması yapmak.
+  - Her mesajın önüne tamsayı bir uzunluk değeri ekleyerek birden fazla mesaj göndermek.
+  - Her mesajın ardına bir sonlandırma karakteri (veya dizisi) ekleyerek birden fazla mesaj göndermek.
+- **Notlar**:
+  - İki taraf anlaştığı sürece herhangi bir teknik kullanılabilir.
+  - Çok baytlı bir uzunluk değeri veya sonlandırma dizisi gönderiliyorsa, tüm baytları almak için uygulamanın birden fazla okuma yapması gerekebileceği unutulmamalıdır.
+
+---
+
+# Gerçekçi Ortamda Mesaj Bölünmesi ve Birleşmesi
+
+- **Sorular (Gerçekçi Bir Senaryoda)**:
+  - Tek bir mesajın ağda bölünmesi (parçalanması) olası mıdır?
+  - Birden fazla mesajın ağda birleştirilmesi (toplanması) olası mıdır?
+- **Yanıtlar**: **Evet, ikisi de oldukça olasıdır!** (Mesaj boyutuna bağlı olarak):
+  - **Mesaj Bölünmesi**: 1400 karakterden (bayttan) büyük mesajlar iletim için genellikle birden fazla pakete bölünür; alıcıya birlikte veya ayrı ayrı ulaşabilir.
+  - **Mesaj Birleştirilmesi**: Akış hizmeti, toplu veri aktarımını daha verimli kılmak amacıyla küçük mesajları alıcı uygulamaya teslim etmeden önce birleştirecek şekilde tasarlanmıştır.
+
+---
+
+<!-- _class: compact -->
+# Akış Modelinde Tamponlama (Buffering)
+
+- Toplu veri aktarımını daha verimli kılan **birleştirme (aggregation)**, gönderici veya alıcı tarafında gerçekleşebilir.
+- Akış modeli, uygulamanın verinin iletimini ve teslimini zorlamasını sağlayan bir **itme (push)** işlemi içerir.
+- **Unix Geleneği**: Her bireysel `write` çağrısı için otomatik olarak *push* uygulanır.
+- **Programlama İpuçları**:
+  - Küçük bir mesajın gecikmeden iletilip teslim edilmesini sağlamak için ayrı bir `write` kullanın.
+  - *Push* kullanılsa dahi, ağ gecikmeleri nedeniyle uygulamalar birleştirmeyi tolere edecek şekilde yazılmalıdır.
+- *(Konunun detayları dersin ilerleyen bölümlerinde açıklanacaktır)*
 
 ---
 
 <!-- _class: lead -->
-# Bölüm 2.3: Ağ Programlama Arayüzü ve Soketler
+# Bölüm 2.2: İstemci-Sunucu Modeli ve Alternatifleri
 
 ---
 
-# Ağ Programlama ve Soketler (Sockets)
+# İstemci-Sunucu Etkileşim Modeli
 
-- **Soket (Socket)**: Uygulama katmanı ile Taşıma katmanı (TCP/UDP) arasındaki işletim sistemi arayüzüdür (API).
+- Uygulamalar tarafından iletişim kurmak için kullanılır.
+- **Sunucu (Server)** olarak hareket eden uygulama:
+  - İlk önce çalışmaya başlar.
+  - Bağlantı kurulmasını pasif olarak bekler.
+- **İstemci (Client)** olarak hareket eden uygulama:
+  - Sunucu çalışmaya başladıktan sonra başlatılır.
+  - İletişimi (bağlantıyı) aktif olarak başlatan taraftır.
+- **Önemli Kavram**: İletişim bir kez kurulduktan sonra, veri (istekler ve yanıtlar) istemci ile sunucu arasında **her iki yönde de** serbestçe akabilir.
+
+---
+
+# İstemcinin (Client) Özellikleri
+
+- Geçici olarak istemciye dönüşen rastgele bir uygulama programıdır.
+- Genellikle doğrudan bir kullanıcı tarafından çağrılır ve genellikle yalnızca tek bir oturum için yürütülür.
+- Bir sunucu ile bağlantıyı aktif olarak başlatır, mesaj alışverişinde bulunur ve ardından bağlantıyı sonlandırır.
+- Gerektiğinde birden fazla hizmete erişebilir, ancak genellikle aynı anda tek bir uzak sunucuyla bağlantı kurar.
+- Kullanıcının kişisel bilgisayarında veya akıllı telefonunda yerel olarak çalışır.
+- Özellikle güçlü bir bilgisayar donanımı gerektirmez.
+
+---
+
+# Sunucunun (Server) Özellikleri
+
+- Bir hizmet sunmaya adanmış özel amaçlı, yetkili (privileged) bir programdır.
+- Genellikle aynı anda birden fazla uzak istemciyi işleyecek şekilde tasarlanmıştır — **tasarımı karmaşıklaştırır**.
+- Bir sistem başlatıldığında (boot) otomatik olarak çağrılır ve birçok istemci oturumu boyunca çalışmaya devam eder.
+- Rastgele uzak istemcilerden bağlantı gelmesini pasif olarak bekler ve ardından mesaj alışverişinde bulunur.
+- Güçlü donanım ve gelişmiş bir işletim sistemi gerektirir.
+- Büyük ve güçlü bir bilgisayarda çalışır.
+
+---
+
+# Sunucu Programları ve Sunucu Sınıfı Bilgisayarlar
+
+- Bilimsel ve pazarlama terminolojisi arasında bir kavram karmaşası bulunmaktadır
+- **Bilimsel (Scientific)**: İstemci ve sunucunun her biri birer **programdır**
+- **Pazarlama (Marketing)**: Sunucu, güçlü bir **bilgisayardır**
+
+![center height:220px](images/fig_103_server_class.svg)
+
+---
+
+# İstemci-Sunucu Etkileşiminin Özeti
+
+| Sunucu Uygulaması (Server Application) | İstemci Uygulaması (Client Application) |
+|---|---|
+| İlk olarak başlar | İkinci olarak başlar |
+| Hangi istemcinin kendisiyle bağlantı kuracağını bilmesine gerek yoktur | Hangi sunucuyla bağlantı kuracağını bilmek zorundadır |
+| Bir istemciden bağlantı gelmesini pasif olarak ve süresiz bekler | İletişim gerektiği her an bir bağlantı başlatır |
+| Veri gönderip alarak bir istemciyle iletişim kurar | Veri gönderip alarak bir sunucuyla iletişim kurar |
+| Bir istemciye hizmet verdikten sonra çalışmaya devam eder ve diğeri için bekler | Bir sunucuyla etkileşime girdikten sonra sonlanabilir |
+
+---
+
+# İstemci ve Sunucu Tarafından Atılan Adımların Gösterimi
+
+![center height:480px](images/fig_105_client_server_steps.svg)
+
+---
+
+# İstemci-Sunucu Alternatifleri
+
+- **Yayın (Broadcast)**:
+  - Gönderici mesajı tüm ağa yayınlar ve tüm istasyonlar mesajı alır.
+  - İyi ölçeklenemez (verimsiz hale gelir).
+  - Veri erişimini kısıtlamak zordur.
+- **Buluşma Noktası (Rendezvous Point)**:
+  - İletişim kuran uygulamaları bir aracı (intermediate) bağlar.
+  - Esas itibarıyla iki istemci ve bir sunucu mevcuttur.
+  - Buluşma noktası bir darboğaz (bottleneck) haline gelir.
+
+---
+
+<!-- _class: compact -->
+# İstemci-Sunucu Alternatifleri: Noktadan Noktaya (Peer-to-Peer)
+
+- **Noktadan Noktaya Etkileşim (Peer-to-Peer / P2P)**:
+  - Merkezi sunucu darboğazını önlemek için tasarlanmıştır.
+  - Veri $N$ adet bilgisayar arasında bölünür.
+  - Her bir bilgisayar kendi verisi için **sunucu**, diğer veriler için **istemci** olarak hareket eder.
+  - Belirli bir bilgisayar toplam trafiğin yalnızca $1 / N$ kadarını alır.
+
+![center height:200px](images/fig_107_p2p_interaction_cropped.png)
+
+---
+
+<!-- _class: lead -->
+# Bölüm 2.3: Basitleştirilmiş API ve Soket API ile Ağ Programlama
+
+---
+
+# Ağ Programlama (Network Programming)
+
+- Ağ üzerinden iletişim kuran istemci ve sunucu uygulamalarının oluşturulmasını ifade eden genel bir terimdir.
+- Programcı bir **Uygulama Programlama Arayüzü (API - Application Programming Interface)** kullanır:
+  - Fonksiyonlar kümesidir.
+  - Veri aktarımının yanı sıra kontrol fonksiyonlarını da içerir (örneğin iletişimi kurma ve sonlandırma).
+- İşletim sistemi tarafından tanımlanır; İnternet standartlarının bir parçası değildir.
+- **Soket API (Socket API)** fiili bir standart (de facto standard) haline gelmiştir.
+
+---
+
+# Basitleştirilmiş Örnek Bir API
+
+- Konuya başlangıç yapmanıza yardımcı olacaktır.
+- **Genel Fikir**:
+  - Sunucu `(bilgisayar, uygulama)` ikilisi ile tanımlanır.
+  - Sunucu ilk olarak başlar ve bağlantı bekler.
+  - İstemci, sunucunun konumunu belirtir.
+  - Bir bağlantı kurulduktan sonra istemci ve sunucu veri alışverişinde bulunabilir.
+- Basitleştirilmiş API içinde yalnızca yedi fonksiyon bulunmaktadır.
+
+---
+
+# Basitleştirilmiş Örnek API Fonksiyonları
+
+| İşlem (Operation) | Anlamı (Meaning) |
+|---|---|
+| `await_contact` | Sunucu tarafından bir istemciden bağlantı beklenmesi için kullanılır |
+| `make_contact` | İstemci tarafından bir sunucuyla bağlantı kurulması için kullanılır |
+| `appname_to_appnum` | Program adını karşılık gelen dahili ikili değere çevirmek için kullanılır |
+| `cname_to_comp` | Bilgisayar adını karşılık gelen dahili ikili değere çevirmek için kullanılır |
+| `send` | İstemci veya sunucu tarafından veri göndermek için kullanılır |
+| `recv` | İstemci veya sunucu tarafından veri almak için kullanılır |
+| `send_eof` | Veri gönderimi bittikten sonra hem istemci hem sunucu tarafından kullanılır |
+
+---
+
+# Örnek API İle İstemci ve Sunucu Etkileşimi
+
+- İstemcinin tek bir istek gönderdiği ve sunucunun yanıt verdiği basit bir veri alışverişindeki çağrı dizisi:
+
+![center height:280px](images/fig_114_simplified_api.png)
+
+- İletişim iki yönlü (bidirectional) olduğu için **her iki taraf da `send_eof` çağırmalıdır**.
+
+---
+
+# Örnek API Veri Tipleri
+
+| Tip Adı (Type Name) | Anlamı (Meaning) |
+|---|---|
+| `appnum` | Bir uygulamayı tanımlamak için kullanılan ikili (binary) değer |
+| `computer` | Bir bilgisayarı tanımlamak için kullanılan ikili (binary) değer |
+| `connection` | İstemci ile sunucu arasındaki bağlantıyı tanımlamak için kullanılan değer |
+
+---
+
+<!-- _class: compact -->
+# Kolaylık Sağlayan Ek Bir Fonksiyon: `recvln`
+
+- Basitleştirilmiş örnek API, kullanım kolaylığı sağlamak amacıyla ek bir `recvln` fonksiyonu içerir.
+- Zorunlu değildir, ancak kolaylık sağlar.
+- `recv` fonksiyonuna benzer:
+  - Bir bağlantıdan veri alır.
+  - Alınan veriyi bir tampona (buffer) yerleştirir.
+- **Farkı**:
+  - Tam olarak istenen miktarda veriyi okur.
+  - **Teknik**: Belirtilen uzunlukta veri elde edilene kadar ardışık olarak `recv` fonksiyonunu çağırır.
+
+---
+
+# Örnek API Parametre Tipleri
+
+| Fonksiyon Adı | Dönen Tip | Parametre 1 Tipi | Parametre 2 Tipi | Parametre 3–4 Tipi |
+|---|---|---|---|---|
+| `await_contact` | `connection` | `appnum` | — | — |
+| `make_contact` | `connection` | `computer` | `appnum` | — |
+| `appname_to_appnum` | `appnum` | `char *` | — | — |
+| `cname_to_comp` | `computer` | `char *` | — | — |
+| `send` | `int` | `connection` | `char *` | `int` |
+| `recv` | `int` | `connection` | `char *` | `int` |
+| `recvln` | `int` | `connection` | `char *` | `int` |
+| `send_eof` | `int` | `connection` | — | — |
+
+- *(Detaylar problem çözme saatlerinde / PSO ortamında öğrenilecektir)*
+
+---
+
+# Soket API (The Socket API)
+
+- **Soket (Socket)**: Uygulama katmanı ile Taşıma katmanı (TCP/UDP) arasındaki fiili standart işletim sistemi arayüzüdür.
 - 1983 yılında BSD Unix işletim sisteminde tanıtılmıştır (BSD Sockets API).
-- Günümüzde tüm işletim sistemlerinde (Linux, Windows, macOS) standart ağ programlama arayüzüdür.
-
----
-
-# Basitleştirilmiş API Etkileşim Akışı
-
-![center height:320px](images/fig_114_simplified_api.png)
-
-- İstemci: `make_contact()` -> `send()` -> `recv()` -> `close()`
-- Sunucu: `await_contact()` -> `recv()` -> `send()` -> `close()`
+- Bir soket, uygulamanın ağa açılan kapısıdır ve işletim sistemi tarafından bir dosya tanımlayıcısı (file descriptor) gibi yönetilir.
 
 ---
 
 # TCP İçin Standart Soket API Çağrıları
 
-![center height:320px](images/fig_121_socket_calls.png)
+![center height:300px](images/fig_121_socket_calls.png)
 
 - Sunucu Tarafı: `socket()` -> `bind()` -> `listen()` -> `accept()` -> `recv()`/`send()` -> `close()`
 - İstemci Tarafı: `socket()` -> `connect()` -> `send()`/`recv()` -> `close()`
 
 ---
 
-# Port Numaraları ve Adresleme
-
-- Bir bilgisayarda aynı anda çalışan binlerce uygulama olabilir.
-- Gelen paketlerin doğru uygulamaya ulaştırılması için **Port Numaraları** kullanılır (16-bit tam sayı: 0 - 65535).
-- **Tanınmış Portlar (Well-Known Ports: 0 - 1023)**:
-  - HTTP: `80`, HTTPS: `443`, DNS: `53`, SSH: `22`, SMTP: `25`, FTP: `21`
-- **Geçici Portlar (Ephemeral Ports: 1024 - 65535)**:
-  - İstemciler tarafından geçici iletişim için dinamik olarak atanır.
-
----
-
 <!-- _class: lead -->
-# Bölüm 2.4: Uygulama Katmanı Protokolleri ve Web
+# Bölüm 2.4: Uygulama Katmanı Protokolleri
 
 ---
 
@@ -212,6 +379,20 @@ Ağ uygulamaları geliştirmek için iki ana iletişim paradigması mevcuttur:
 
 ---
 
+# Uygulama Protokollerinde Durum (State)
+
+- **Durumsuz Protokol (Stateless Protocol)**:
+  - Sunucu istemciler hakkında geçmiş etkileşim bilgisini tutmaz (ör. HTTP/1.0). Her istek bağımsızdır. Tasarımı basittir, sunucu çökse bile kolay toparlanır.
+- **Durumlu Protokol (Stateful Protocol)**:
+  - Sunucu istemcinin oturum durumunu ve geçmişini hatırlar (ör. FTP). İletişim karmaşıklaşır ancak daha zengin etkileşim sağlar.
+
+---
+
+<!-- _class: lead -->
+# Bölüm 2.5: Standart Uygulama Protokolü Örnekleri
+
+---
+
 # Web Teknolojileri ve HTTP
 
 Web üç temel standart üzerine inşa edilmiştir:
@@ -222,95 +403,55 @@ Web üç temel standart üzerine inşa edilmiştir:
 
 ---
 
-# HTTP İstek Metotları (Request Methods)
+# HTTP İstek Türleri ve Yanıt Kodu Sınıfları
 
-- **GET**: Sunucudan belirtilen kaynağı/sayfayı ister (en yaygın metot).
-- **POST**: Sunucuya veri gönderir (form doldurma, dosya yükleme).
-- **HEAD**: Sadece başlık (header) bilgilerini ister (gövde/body gelmez).
-- **PUT**: Sunucuya yeni bir kaynak yükler veya mevcudunu günceller.
-- **DELETE**: Sunucudaki kaynağı siler.
-
----
-
-# HTTP Yanıt Durum Kodları (Response Status Codes)
-
-HTTP yanıtları 3 haneli durum kodları içerir:
-
-- **1xx (Bilgilendirme)**: İstek alındı, işlem devam ediyor.
-- **2xx (Başarı)**: `200 OK` (İstek başarıyla işlendi).
-- **3xx (Yönlendirme)**: `301 Moved Permanently`, `302 Found`.
-- **4xx (İstemci Hatası)**: `404 Not Found`, `403 Forbidden`, `400 Bad Request`.
-- **5xx (Sunucu Hatası)**: `500 Internal Server Error`, `503 Service Unavailable`.
-
----
-
-# HTTP Header (Başlık) Formatı
-
-HTTP mesajları düz metin (text-based) formatındadır:
-
-```http
-GET /index.html HTTP/1.1
-Host: www.example.com
-User-Agent: Mozilla/5.0
-Accept: text/html
-Connection: keep-alive
-```
-
-Sunucu Yanıtı:
-
-```http
-HTTP/1.1 200 OK
-Date: Thu, 30 Jul 2026 22:00:00 GMT
-Server: Apache/2.4.41
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1256
-```
-
----
-
-<!-- _class: lead -->
-# Bölüm 2.5: E-Posta Mimarisi ve Protokolleri
+- **HTTP İstek Metotları**:
+  - `GET`: Sunucudan kaynak ister.
+  - `POST`: Sunucuya veri formları iletir.
+  - `HEAD`: Yalnızca başlık bilgisini ister.
+  - `PUT`: Sunucuya dosya yükler.
+- **HTTP Durum Kodları**:
+  - `200 OK`: Başarılı.
+  - `301 Moved Permanently`: Kalıcı yönlendirme.
+  - `404 Not Found`: Kaynak bulunamadı.
+  - `500 Internal Server Error`: Sunucu içi hata.
 
 ---
 
 # Orijinal vs Günümüz E-Posta Mimarisi
 
-![center height:320px](images/fig_138_original_email.png)
+![center height:300px](images/fig_138_original_email.png)
 
-- **Orijinal Model**: Gönderenin bilgisayarı doğrudan alıcının bilgisayarına bağlanıp e-postayı iletir. (Alıcının bilgisayarı kapalıysa e-posta kaybolur).
+- **Orijinal Model**: Gönderenin bilgisayarı doğrudan alıcının bilgisayarına bağlanıp e-postayı iletir (Alıcının bilgisayarı kapalıysa iletişim başarısız olur).
 
 ---
 
 # Günümüz E-Posta Mimarisi
 
-![center height:320px](images/fig_139_current_email.png)
+![center height:300px](images/fig_139_current_email.png)
 
-- **Posta Sunucuları (Mail Servers / MTA)**: E-postalar sunucular arasında kesintisiz olarak aktarılır ve kullanıcı posta kutusunda (mailbox) saklanır.
-- **Posta Erişim Protokolleri (POP3 / IMAP)**: Kullanıcı istediği zaman sunucudaki kutusundan e-postalarını çeker.
-
----
-
-# E-Posta Protokolleri Özeti
-
-1. **SMTP (Simple Mail Transfer Protocol - Port 25/587)**:
-   - İstemciden sunucuya veya sunucudan sunucuya e-posta göndermek için kullanılır (Push Protokolü).
-2. **POP3 (Post Office Protocol v3 - Port 110/995)**:
-   - E-postaları sunucudan yerel cihaza indirir ve genellikle sunucudan siler.
-3. **IMAP (Internet Message Access Protocol - Port 143/993)**:
-   - E-postaları sunucu üzerinde tutar; klasörleri cihazlar arasında senkronize eder.
-4. **MIME (Multipurpose Internet Mail Extensions)**:
-   - Metin dışı (resim, ses, video, belge) dosyaların e-postaya eklenmesini sağlar.
+- **Posta Sunucuları (Mail Servers / MTA)**: E-postalar sunucular arasında SMTP ile kesintisiz aktarılır ve alıcı kutusunda saklanır.
+- **Posta Erişim Protokolleri**: Kullanıcı cihazından e-postalarını POP3 veya IMAP ile çeker.
 
 ---
 
-<!-- _class: lead -->
-# Bölüm 2.6: Dosya Aktarımı ve Uzaktan Erişim
+<!-- _class: compact -->
+# E-Posta Protokolleri ve Standartları
+
+- **SMTP (Simple Mail Transfer Protocol - Port 25/587)**:
+  - E-postaları iletmek için kullanılır (Push Protokolü).
+- **POP3 (Post Office Protocol v3 - Port 110/995)**:
+  - E-postaları sunucudan cihaza indirir, varsayılan olarak sunucudan siler.
+- **IMAP (Internet Message Access Protocol - Port 143/993)**:
+  - E-postaları sunucuda tutar, klasörleri cihazlar arasında senkronize eder.
+- **RFC2822 & MIME (Multipurpose Internet Mail Extensions)**:
+  - E-posta mesaj başlık formatı ve metin dışı (resim, ses, dosya) içeriklerin eklenmesini sağlayan standarttır.
 
 ---
 
-# FTP (File Transfer Protocol) Mimarisi
+# Dosya Aktarım Protokolü (FTP)
 
-![center height:320px](images/fig_154_ftp_architecture.png)
+![center height:300px](images/fig_154_ftp_architecture.png)
 
 - FTP çift bağlantı (two-connection) kullanır:
   - **Kontrol Bağlantısı (Port 21)**: Komutlar ve yanıtlar için (TCP).
@@ -318,7 +459,7 @@ Content-Length: 1256
 
 ---
 
-# Uzaktan Erişim Protokolleri
+# Uzaktan Erişim Protokolleri (Telnet & SSH)
 
 - **Telnet (Port 23)**:
   - Uzaktaki bir komut satırına erişim sağlar.
@@ -330,22 +471,16 @@ Content-Length: 1256
 
 ---
 
-<!-- _class: lead -->
-# Bölüm 2.7: Alan Adı Sistemi (DNS)
-
----
-
 # Alan Adı Sistemi (DNS - Domain Name System)
 
 - İnsanlar isimleri hatırlar (`www.google.com`), bilgisayarlar IP adreslerini kullanır (`142.250.185.78`).
-- **DNS**: İsimler ile IP adresleri arasında dönüşüm yapan dağıtık (distributed) bir veritabanı sistemidir.
-- UDP ve TCP Port `53` üzerinde çalışır.
+- **DNS**: İsimler ile IP adresleri arasında dönüşüm yapan dağıtık (distributed) bir veritabanı sistemidir. UDP ve TCP Port `53` üzerinde çalışır.
 
 ---
 
 # Hiyerarşik İsim Alanı ve Kök Sunucular
 
-![center height:320px](images/fig_166_dns_servers.png)
+![center height:300px](images/fig_166_dns_servers.png)
 
 - **Kök Sunucular (Root Servers)**: Hiyerarşinin en tepesindedir (Dünyada 13 kök IP adresi).
 - **Üst Düzey Alan Adı Sunucuları (TLD Servers)**: `.com`, `.org`, `.net`, `.tr` gibi uzantıları yönetir.
@@ -355,7 +490,7 @@ Content-Length: 1256
 
 # DNS Adres Çözümleme ve Önbellekleme
 
-![center height:320px](images/fig_167_dns_resolution.png)
+![center height:300px](images/fig_167_dns_resolution.png)
 
 1. İstemci yerel DNS sunucusuna (Local DNS) başvurur.
 2. Yerel DNS sırasıyla Kök -> TLD -> Yetkili sunucuya sorgu gönderir.
@@ -364,7 +499,7 @@ Content-Length: 1256
 ---
 
 <!-- _class: lead -->
-# Bölüm 2.8: Özet ve Değerlendirme
+# Bölüm 2.6: Özet
 
 ---
 

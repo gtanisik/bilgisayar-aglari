@@ -33,12 +33,17 @@ Ders materyalinde çeviri tutarlılığını sağlamak amacıyla belirlenen teme
 | **Payload** | Yük / Taşınan Veri | Başlık hariç asıl veri kısmı |
 | **Encapsulation** | Kapsülleme | Üst katman verisini alt katman başlığına sarma |
 | **Decapsulation** | Kapsül Açma | Alt katman başlığını çıkarıp veriyi yukarı iletme |
-| **Broadcast** | Yayın / Yayınlama | Ağdaki herkese gönderme |
-| **Multicast** | Çoklu Yayın | Belirli bir gruba gönderme |
 | **Unicast** | Tekli Yayın | Tek bir alıcıya gönderme |
+| **Multicast** | Çoklu Yayın | Belirli bir gruba gönderme |
+| **Broadcast** | Yayın / Yayınlama | Ağdaki herkese gönderme |
+| **1-to-1** | Bire-bir | Bire-bir iletişim türü |
+| **1-to-many** | Birden-çoğa | Birden-çoğa iletişim türü |
+| **Many-to-many** | Çoktan-çoğa | Çoktan-çoğa iletişim türü |
+| **1-to-all** | Birden-herkese | Birden-herkese yayın iletim türü |
 | **Flow Control** | Akış Kontrolü | Alıcının boğulmasını önleme |
 | **Congestion Control** | Tıkanıklık Kontrolü | Ağın boğulmasını önleme |
 | **Acknowledge (ACK)** | Onay / Alındı Bilgisi | Verinin ulaştığını bildiren yanıt |
+| **Contact** | Bağlantı / Bağlantı Kurma | İstemci-sunucu iletişim kurma adımı (`initiates contact`, `await_contact`) |
 
 ---
 

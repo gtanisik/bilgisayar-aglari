@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 480" width="100%" height="100%">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Left Column: Client Side (Maximal Font Size) -->
+  <g transform="translate(10, 10)">
+    <!-- Header Badge -->
+    <rect x="0" y="0" width="340" height="46" rx="8" fill="#0284c7" filter="url(#shadow)"/>
+    <text x="170" y="30" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="19" font-weight="bold" fill="#ffffff" text-anchor="middle">İstemci Tarafı (Client Side)</text>
+
+    <!-- Client Bullet Points (18px Font Size) -->
+    <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="18" fill="#0369a1" font-weight="600">
+      <circle cx="15" cy="78" r="4" fill="#0284c7"/>
+      <text x="28" y="83">Önceden bir N portunda anlaşır</text>
+
+      <circle cx="15" cy="132" r="4" fill="#0284c7"/>
+      <text x="28" y="132">Sunucu zaten çalışıyorken</text>
+      <text x="28" y="154">daha sonra başlar</text>
+
+      <circle cx="15" cy="204" r="4" fill="#0284c7"/>
+      <text x="28" y="209">Kullanıcıdan sunucu adını alır</text>
+
+      <circle cx="15" cy="260" r="4" fill="#0284c7"/>
+      <text x="28" y="260">DNS ile adı IP adresine</text>
+      <text x="28" y="282">çevirir</text>
+
+      <circle cx="15" cy="332" r="4" fill="#0284c7"/>
+      <text x="28" y="332">IP adresi ve N portu ile</text>
+      <text x="28" y="354">sunucuyla bağlantı kurar</text>
+
+      <circle cx="15" cy="404" r="4" fill="#0284c7"/>
+      <text x="28" y="404">Sunucuyla etkileşime girer</text>
+      <text x="28" y="426">ve ardından çıkış yapar</text>
+    </g>
+  </g>
+
+  <!-- Middle Column: Horizontal Diagram (Transparent background) -->
+  <g transform="translate(360, 10)">
+    <text x="150" y="30" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="bold" fill="#475569" text-anchor="middle">İletişim Akışı</text>
+
+    <!-- Client Drawing (PC / Laptop / Monitor) -->
+    <g transform="translate(5, 180)">
+      <rect x="5" y="5" width="55" height="40" rx="3" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+      <rect x="10" y="10" width="45" height="30" fill="#e0f2fe"/>
+      <path d="M 27 45 L 38 45 L 41 55 L 24 55 Z" fill="#64748b"/>
+      <rect x="18" y="55" width="29" height="4" rx="1" fill="#475569"/>
+      <rect x="65" y="15" width="20" height="44" rx="2" fill="#475569" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="75" cy="23" r="2" fill="#38bdf8"/>
+      <line x1="70" y1="32" x2="80" y2="32" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="45" y="78" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">İstemci</text>
+    </g>
+
+    <!-- Connection 1 -->
+    <path d="M 100 210 L 138 210" stroke="#0284c7" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="119" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-style="italic" fill="#0284c7" text-anchor="middle">bağlantı</text>
+
+    <!-- Cloud Drawing -->
+    <g transform="translate(132, 175)">
+      <path d="M 10 35 A 16 16 0 0 1 32 20 A 22 22 0 0 1 65 20 A 16 16 0 0 1 72 35 A 14 14 0 0 1 65 50 L 10 50 A 14 14 0 0 1 10 35 Z" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="40" y="38" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">İnternet</text>
+    </g>
+
+    <!-- Connection 2 -->
+    <path d="M 210 210 L 245 210" stroke="#16a34a" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="227" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-style="italic" fill="#16a34a" text-anchor="middle">bağlantı</text>
+
+    <!-- Server Drawing (Rack Server) -->
+    <g transform="translate(245, 175)">
+      <rect x="5" y="10" width="45" height="55" rx="3" fill="#f8fafc" stroke="#16a34a" stroke-width="2"/>
+      <rect x="9" y="16" width="37" height="10" rx="1" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+      <rect x="9" y="28" width="37" height="10" rx="1" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+      <rect x="9" y="41" width="37" height="10" rx="1" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+      <circle cx="40" cy="20" r="1.5" fill="#16a34a"/>
+      <circle cx="40" cy="33" r="1.5" fill="#16a34a"/>
+      <circle cx="40" cy="46" r="1.5" fill="#16a34a"/>
+      <text x="27" y="83" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold" fill="#14532d" text-anchor="middle">Sunucu</text>
+    </g>
+  </g>
+
+  <!-- Right Column: Server Side (Maximal Font Size) -->
+  <g transform="translate(670, 10)">
+    <!-- Header Badge -->
+    <rect x="0" y="0" width="340" height="46" rx="8" fill="#16a34a" filter="url(#shadow)"/>
+    <text x="170" y="30" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="19" font-weight="bold" fill="#ffffff" text-anchor="middle">Sunucu Tarafı (Server Side)</text>
+
+    <!-- Server Bullet Points (18px Font Size) -->
+    <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="18" fill="#14532d" font-weight="600">
+      <circle cx="15" cy="78" r="4" fill="#16a34a"/>
+      <text x="28" y="83">Önceden bir N portunda anlaşır</text>
+
+      <circle cx="15" cy="132" r="4" fill="#16a34a"/>
+      <text x="28" y="132">İstemcilerden herhangi birinden</text>
+      <text x="28" y="154">önce başlar</text>
+
+      <circle cx="15" cy="204" r="4" fill="#16a34a"/>
+      <text x="28" y="204">N portunu yerel sisteme</text>
+      <text x="28" y="226">kaydeder</text>
+
+      <circle cx="15" cy="276" r="4" fill="#16a34a"/>
+      <text x="28" y="276">Bir istemciden bağlantı</text>
+      <text x="28" y="298">gelmesini bekler</text>
+
+      <circle cx="15" cy="348" r="4" fill="#16a34a"/>
+      <text x="28" y="348">İstemci işini bitirene kadar</text>
+      <text x="28" y="370">etkileşime girer</text>
+
+      <circle cx="15" cy="420" r="4" fill="#16a34a"/>
+      <text x="28" y="420">Sonraki istemciden bağlantı</text>
+      <text x="28" y="442">gelmesini bekler...</text>
+    </g>
+  </g>
+</svg>

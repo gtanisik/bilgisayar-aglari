@@ -32,6 +32,7 @@ Durum Simgeleri:
 ---
 
 ## Güncelleme Günlüğü (Changelog)
+* **2026-07-31**: Modül 2 slaytları sayfa sayfa gözden geçirilerek revize edildi (PDF Sayfa 75 - 117 / Slayt 1 - 31). "Contact" terimi "bağlantı / bağlantı kurma" olarak güncellendi. PDF 98-105 istemci-sunucu etkileşimi detaylı olarak açıldı, Donanım vs Yazılım sunucu ayrımı (PDF 103) ve 3 sütunlu geniş fontlu etkileşim şeması (PDF 105) üretildi. Basitleştirilmiş Örnek API fonksiyon ve veri tipleri (PDF 110-117) "Örnek API" başlıklarıyla 1-e-1 Türkçe Marp slaytlarına dönüştürüldü.
 * **2026-07-29**: Modül 1 görsel ve slayt yapısı revize edildi. Kullanılmayan SVG dosyaları temizlendi, tüm şekiller şeffaf background PNG olarak entegre edildi, VPN katmanlama slaytı eklendi ve 57-62. PDF slayt yapısı birebir korundu.
 * **2026-07-28**: Modül 1 Türkçe Marp slaytları (`slides/mod01-introduction/mod01_giris_ve_katmanlama.md`) tamamlandı. 3B İnternet Referans Modeli SVG çizimi üretildi, Marp yerel görsel desteği (`--allow-local-files`) Makefile'a eklendi ve `make all` ile güncel PDF/HTML derlemeleri sağlandı.
 * **2026-07-27**: Proje yapısı, Ana Plan (`MASTER_PLAN.md`), İlerleme Belgesi (`PROGRESS.md`), Terimler Sözlüğü (`NOTES.md`) ve Marp Şablonu (`templates/slide-template.md`) oluşturuldu.

@@ -18,5 +18,7 @@ npm-debug.log*
 scratch/
 .tmp/
 *.tmp
+ai/pdf_text/
+ai/pdf_extract/
 
 Lecture_Notes.pdf
