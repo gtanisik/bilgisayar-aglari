@@ -346,20 +346,36 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 
 ---
 
-# Soket API (The Socket API)
+# Soket API ve Tarihçesi
 
-- **Soket (Socket)**: Uygulama katmanı ile Taşıma katmanı (TCP/UDP) arasındaki fiili standart işletim sistemi arayüzüdür.
-- 1983 yılında BSD Unix işletim sisteminde tanıtılmıştır (BSD Sockets API).
-- Bir soket, uygulamanın ağa açılan kapısıdır ve işletim sistemi tarafından bir dosya tanımlayıcısı (file descriptor) gibi yönetilir.
+- Orijinal olarak **BSD Unix** işletim sisteminin bir parçası olarak geliştirilmiştir (1983).
+- Günümüzde endüstride **fiili standart** (de facto standard) haline gelmiştir.
+- AT&T, **TLI** (Transport Layer Interface) adında alternatif bir arayüz tanımlamıştı; ancak TLI artık kullanılmamaktadır (extinct).
+- Neredeyse tüm işletim sistemleri soket uygulamasını (implementation) içerir.
+- Microsoft Windows küçük değişiklikler yapmayı tercih etmiştir (Winsock - rahatsız edici bir ayrıntı).
+
+---
+
+# Soket Özellikleri (Socket Characteristics)
+
+- İşletim sistemi tarafından oluşturulur ve yönetilir.
+- İstemci veya sunucu tarafından başlatılabilir:
+  - Sunucu bir soket oluşturup **pasif (passive)** dinleme moduna geçer.
+  - İstemci bir soket oluşturup **aktif (active)** bağlantı başlatır.
+- İşletim sisteminin dosya arayüzüyle entegredir:
+  - Uygulama bir soket oluşturduğunda bir **dosya tanımlayıcısı (file descriptor)** elde eder.
+  - Okuma (`read`), yazma (`write`) veya kapatma (`close`) işlemleri standart dosya I/O mantığıyla gerçekleştirilebilir.
+- Asenkron/zaman uyumsuz (asynchronous / non-blocking) veya senkron/zaman uyumlu (synchronous / blocking) I/O destekler.
 
 ---
 
 # TCP İçin Standart Soket API Çağrıları
 
-![center height:300px](images/fig_121_socket_calls.png)
+![center height:240px](images/fig_121_socket_calls.png)
 
-- Sunucu Tarafı: `socket()` -> `bind()` -> `listen()` -> `accept()` -> `recv()`/`send()` -> `close()`
-- İstemci Tarafı: `socket()` -> `connect()` -> `send()`/`recv()` -> `close()`
+- **Sunucu Tarafı**: `socket()` $\rightarrow$ `bind()` $\rightarrow$ `listen()` $\rightarrow$ `accept()` $\rightarrow$ `recv()`/`send()` $\rightarrow$ `close()`
+- **İstemci Tarafı**: `socket()` $\rightarrow$ `connect()` $\rightarrow$ `send()`/`recv()` $\rightarrow$ `close()`
+- Bağlantılı (connection-oriented) akış hizmeti (stream service) için etkileşim sırasını gösterir.
 
 ---
 
@@ -368,147 +384,423 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 
 ---
 
-# Uygulama Katmanı Protokolü Nedir?
+# Protokol Türleri: Açık ve Kapalı Protokoller
 
-- İki uç uygulamanın birbiriyle nasıl mesajlaşacağını belirleyen kurallar bütünüdür.
-- Şunları tanımlar:
-  - Mesaj türleri (ör. İstek / Yanıt).
-  - Mesajların sözdizimi (syntax) ve alan yapıları.
-  - Alanların anlamı (semantics).
-  - Yanıt verme ve iletişim kuralları.
+- **Açık Protokol (Open Protocol)**:
+  - Spesifikasyonları kamuya açık ve ücretsiz olarak yayımlanmıştır (RFC - Request for Comments).
+  - Standartlar **IETF (Internet Engineering Task Force)** tarafından yönetilir.
+  - Farklı üreticilerin ve geliştiricilerin yazılımlarının birbiriyle sorunsuz çalışmasını (interoperability) sağlar.
+  - Örnekler: HTTP, SMTP, FTP, DNS.
+- **Kapalı / Özel Protokol (Closed / Proprietary Protocol)**:
+  - Tek bir şirket veya kuruluş tarafından sahiplenilir ve detayları gizli tutulur.
+  - Yalnızca ilgili şirketin yazılımları iletişim kurabilir.
+  - Örnekler: Skype (orijinal protokol), Skype for Business, Apple FaceTime.
+
+---
+
+# Uygulama Protokolü Tanımı: Temsil ve Aktarım
+
+Bir uygulama katmanı protokolü iki temel bileşeni tanımlar:
+
+1. **Veri Temsili (Data Representation)**:
+   - Veri sözdizimi (syntax), mesaj türleri, alan formatları ve karakter kodlaması.
+   - İletilen verinin nasıl biçimlendirileceğini ve anlamlandırılacağını (semantics) belirler.
+2. **Veri Aktarımı (Data Transfer)**:
+   - İstemci ve sunucu arasındaki mesaj alışveriş kuralları ve dizilimi.
+   - Bağlantı kurulumu, hata durumu yönetimi, onaylama ve oturum kapatma adımları.
 
 ---
 
 # Uygulama Protokollerinde Durum (State)
 
 - **Durumsuz Protokol (Stateless Protocol)**:
-  - Sunucu istemciler hakkında geçmiş etkileşim bilgisini tutmaz (ör. HTTP/1.0). Her istek bağımsızdır. Tasarımı basittir, sunucu çökse bile kolay toparlanır.
+  - Sunucu, istemciler hakkında geçmiş etkileşim bilgisini (state) tutmaz.
+  - Her bir istek, önceki isteklerden tamamen bağımsızdır.
+  - Tasarımı ve uygulaması basittir; sunucu çökse bile toparlanması kolaydır.
+  - Örnek: HTTP/1.0 (Çerezler / Cookies kullanılmadığında).
 - **Durumlu Protokol (Stateful Protocol)**:
-  - Sunucu istemcinin oturum durumunu ve geçmişini hatırlar (ör. FTP). İletişim karmaşıklaşır ancak daha zengin etkileşim sağlar.
+  - Sunucu, istemcinin mevcut durumunu, kimliğini ve oturum geçmişini takip eder.
+  - İletişim adımları birbirine bağımlıdır.
+  - Örnek: FTP (oturum açma bilgisi ve mevcut çalışma dizini sunucu tarafından tutulur).
 
 ---
 
 <!-- _class: lead -->
-# Bölüm 2.5: Standart Uygulama Protokolü Örnekleri
+# Bölüm 2.5: Uygulama Protokolü Örnekleri
+
+- Web Taraması (Web Browsing)
+- E-Posta (Email)
+- Dosya Aktarımı (File Transfer - FTP)
+- Uzaktan Erişim (TELNET / SSH)
+- Alan Adı Sistemi (DNS - Domain Name System)
 
 ---
 
-# Web Teknolojileri ve HTTP
+# Web Taraması (Web Browsing) ve Temel Standartlar
 
-Web üç temel standart üzerine inşa edilmiştir:
+Web teknolojisi üç temel bileşen üzerine inşa edilmiştir:
 
-1. **HTML (HyperText Markup Language)**: Belge içeriğini ve yapısını biçimlendirir.
-2. **URL (Uniform Resource Locator)**: İnternet üzerindeki kaynağın adresini belirtir (`http://host:port/path`).
-3. **HTTP (HyperText Transfer Protocol)**: İstemci (tarayıcı) ile sunucu arasındaki aktarım protokolüdür.
-
----
-
-# HTTP İstek Türleri ve Yanıt Kodu Sınıfları
-
-- **HTTP İstek Metotları**:
-  - `GET`: Sunucudan kaynak ister.
-  - `POST`: Sunucuya veri formları iletir.
-  - `HEAD`: Yalnızca başlık bilgisini ister.
-  - `PUT`: Sunucuya dosya yükler.
-- **HTTP Durum Kodları**:
-  - `200 OK`: Başarılı.
-  - `301 Moved Permanently`: Kalıcı yönlendirme.
-  - `404 Not Found`: Kaynak bulunamadı.
-  - `500 Internal Server Error`: Sunucu içi hata.
+- **HTML (HyperText Markup Language)**: Belge içeriğini, bağlantılarını (hyperlinks) ve yapısını tanımlayan biçimlendirme dilidir.
+- **URL (Uniform Resource Locator)**: İnternet üzerindeki herhangi bir kaynağın eşsiz adresini ve erişim metodunu belirtir.
+- **HTTP (HyperText Transfer Protocol)**: İstemci (web tarayıcı) ile sunucu (web sunucusu) arasındaki veri aktarım protokolüdür.
 
 ---
 
-# Orijinal vs Günümüz E-Posta Mimarisi
+# Tekdüze Kaynak Bulucu (URL - Uniform Resource Locator)
 
-![center height:300px](images/fig_138_original_email.png)
+- Web kaynaklarını adreslemek için kullanılan standart sözdizimi:
 
-- **Orijinal Model**: Gönderenin bilgisayarı doğrudan alıcının bilgisayarına bağlanıp e-postayı iletir (Alıcının bilgisayarı kapalıysa iletişim başarısız olur).
+$$\texttt{protocol://host:port/page\_name}$$
+
+- **`protocol`**: Kullanılacak uygulama protokolü (ör. `http`, `https`, `ftp`).
+- **`host`**: Sunucunun etki alanı adı veya IP adresi (ör. `www.cs.purdue.edu`).
+- **`port`**: *(Opsiyonel)* Sunucunun dinlediği port numarası (HTTP için varsayılan `80`, HTTPS için `443`).
+- **`page_name`**: Sunucudaki dosya veya kaynağın yolu (path) ve adı (ör. `/homes/comer/index.html`).
+
+---
+
+# HTTP Protokolünün Temel Özellikleri
+
+- **Metin Tabanlı (Text-Based)**: İstek ve yanıt başlıkları insan tarafından okunabilir metin formatındadır.
+- **İstek / Yanıt Paradigması (Request / Response)**:
+  - İstemci sunucuya bir HTTP isteği gönderir.
+  - Sunucu durum bilgisi ve talep edilen içerikle yanıt verir.
+- **Durumsuz (Stateless)**: Sunucu varsayılan olarak istemci durumunu saklamaz (oturum takibi için çerezler / cookies kullanılır).
+- **Önbellekleme (Caching)**: Verimliliği artırmak için yanıtların önbellekte tutulmasını destekler.
+
+---
+
+# Dört Ana HTTP İstek Türü (Request Methods)
+
+| İstek Türü | Açıklama |
+|---|---|
+| **`GET`** | Sunucudan bir belge ister; sunucu durum bilgisi ve belgenin kopyasını gönderir |
+| **`HEAD`** | Sunucudan yalnızca durum/başlık bilgisini ister; belge içeriğini göndermez |
+| **`POST`** | Sunucuya veri gönderir; sunucu veriyi belirtilen öğeye ekler (ör. forma ekleme) |
+| **`PUT`** | Sunucuya veri gönderir; belirtilen öğenin üzerine tamamen yazar (overwrite) |
+
+- **`GET` İsteği Biçimi**:
+  $$\texttt{GET /item HTTP/1.0}\quad\text{veya}\quad\texttt{GET /item HTTP/1.1}$$
+
+---
+
+# HTTP Yanıt Biçimi (Response Header Format)
+
+- Yanıt bir metin başlığı ile başlar ve isteğe bağlı ikili (binary) içerik ile devam eder.
+- Başlık formatı:
+```http
+HTTP/1.0 200 OK
+Server: Apache/2.2.11 (Unix)
+Last-Modified: Mon, 17 Oct 2011 22:21:41 GMT
+Content-Length: 2640
+Content-Type: text/html
+
+... [2640 baytlık HTML veri içeriği burada başlar] ...
+```
+- Başlık kısmı boş bir satır (`CRLF`) ile sonlanır.
+
+---
+
+<!-- _class: compact -->
+# HTTP İstek/Yanıt Örneği (Telnet İle Apache Web Sunucusu)
+
+```text
+$ telnet www.cs.purdue.edu 80
+Trying 128.10.19.20...
+Connected to lucan.cs.purdue.edu.
+Escape character is '^]'.
+GET /homes/comer/ HTTP/1.0
+
+HTTP/1.1 200 OK
+Date: Sun, 10 Nov 2013 11:38:27 GMT
+Server: Apache/2.2.11 (Unix) mod_ssl/2.2.11 OpenSSL/0.9.8r
+Last-Modified: Mon, 17 Oct 2011 22:21:41 GMT
+ETag: "bafb0-a50-4af8607f7c740"
+Accept-Ranges: bytes
+Content-Length: 2640
+Connection: close
+Content-Type: text/html
+
+... (web sayfasının HTML verisi burada devam eder)
+```
+
+---
+
+# Orijinal Uçtan Uca E-Posta Mimarisi
+
+![center height:260px](images/fig_138_original_email.png)
+
+- Her bilgisayar hem e-posta sunucusu hem de e-posta istemcisi çalıştırır.
+- Gelen e-postalar doğrudan kullanıcının posta kutusuna (mailbox) bırakılır.
+- Giden e-postalar bir kuyruğa (queue) yerleştirilir.
+- Alıcının bilgisayarı kapalıysa e-posta iletilemez.
 
 ---
 
 # Günümüz E-Posta Mimarisi
 
-![center height:300px](images/fig_139_current_email.png)
+![center height:260px](images/fig_139_current_email.png)
 
-- **Posta Sunucuları (Mail Servers / MTA)**: E-postalar sunucular arasında SMTP ile kesintisiz aktarılır ve alıcı kutusunda saklanır.
-- **Posta Erişim Protokolleri**: Kullanıcı cihazından e-postalarını POP3 veya IMAP ile çeker.
+- Kullanıcının posta kutusu ayrı bir sunucuda (genellikle ISP veya bulut e-posta sağlayıcısında) tutulur.
+- E-posta aktarım uygulaması (MTA) mesajı sunucudaki posta kutusuna bırakır.
+- Kullanıcı arayüzü uygulaması (MUA veya Webmail) uzaktaki posta kutusuna erişir.
+
+---
+
+# Basit Posta Aktarım Protokolü (SMTP)
+
+- E-posta aktarımı için standart İnternet protokolüdür.
+- **Akış Paradigması (Stream Paradigm)** kullanır ve kontrol mesajları metin tabanlıdır.
+- Yalnızca düz metin (plain text) mesajları iletir.
+- Mesaj sonunu `<CR><LF>.<CR><LF>` dizilimi ile belirler.
+- Göndericinin alıcı adreslerini belirtmesine olanak tanır ve her bir adresi doğrular.
+- Aynı bilgisayardaki birden fazla alıcıya tek bir mesaj kopyası göndererek ağ verimliliği sağlar.
 
 ---
 
 <!-- _class: compact -->
-# E-Posta Protokolleri ve Standartları
+# Örnek SMTP Oturumu (Example SMTP Session)
 
-- **SMTP (Simple Mail Transfer Protocol - Port 25/587)**:
-  - E-postaları iletmek için kullanılır (Push Protokolü).
-- **POP3 (Post Office Protocol v3 - Port 110/995)**:
-  - E-postaları sunucudan cihaza indirir, varsayılan olarak sunucudan siler.
-- **IMAP (Internet Message Access Protocol - Port 143/993)**:
-  - E-postaları sunucuda tutar, klasörleri cihazlar arasında senkronize eder.
-- **RFC2822 & MIME (Multipurpose Internet Mail Extensions)**:
-  - E-posta mesaj başlık formatı ve metin dışı (resim, ses, dosya) içeriklerin eklenmesini sağlayan standarttır.
+```text
+S: 220 somewhere.com Simple Mail Transfer Service Ready
+C: HELO example.edu
+S: 250 OK
+C: MAIL FROM:<John_Q_Smith@example.edu>
+S: 250 OK
+C: RCPT TO:<Mathew_Doe@somewhere.com>
+S: 550 No such user here
+C: RCPT TO:<Paul_Jones@somewhere.com>
+S: 250 OK
+C: DATA
+S: 354 Start mail input; end with <CR><LF>.<CR><LF>
+C: ... mesaj gövdesi iletiliyor ...
+C: <CR><LF>.<CR><LF>
+S: 250 OK
+C: QUIT
+S: 221 somewhere.com closing transmission channel
+```
 
 ---
 
-# Dosya Aktarım Protokolü (FTP)
+# Posta Erişim Protokolleri (Mail Access Protocols)
 
-![center height:300px](images/fig_154_ftp_architecture.png)
+Kullanıcının uzaktaki sunucudaki posta kutusuna erişmesi için iki temel standart protokol bulunur:
 
-- FTP çift bağlantı (two-connection) kullanır:
-  - **Kontrol Bağlantısı (Port 21)**: Komutlar ve yanıtlar için (TCP).
-  - **Veri Bağlantısı (Port 20)**: Dosya içeriğinin aktarımı için (TCP).
+- **POP3 (Post Office Protocol version 3)**:
+  - Posta kutusundaki e-postaları kullanıcının yerel cihazına indirir.
+  - İndirilen mesajlar varsayılan olarak sunucudan silinir.
+- **IMAP (Internet Message Access Protocol)**:
+  - E-postaları sunucuda saklar ve yönetir.
+  - Başlıkları inceleme, klasör oluşturma ve mesajları birden fazla cihaz arasında senkronize etme imkanı sunar.
 
 ---
 
-# Uzaktan Erişim Protokolleri (Telnet & SSH)
+<!-- _class: compact -->
+# RFC2822 Posta Mesaj Formatı
 
-- **Telnet (Port 23)**:
-  - Uzaktaki bir komut satırına erişim sağlar.
-  - Güvensizdir; tüm kullanıcı adı, parola ve veriler açık metin (cleartext) olarak iletilir.
-- **SSH (Secure Shell - Port 22)**:
-  - Telnet'in güvenli alternatifidir.
-  - Tüm iletişim ve kimlik doğrulama güçlü kriptografi ile şifrelenir.
-  - Günümüzün standart uzaktan yönetim aracıdır.
+- E-posta mesaj yapısını tanımlayan standarttır.
+- Mesaj bir metin dosyasından oluşur; başlık (header) ile gövde (body) **boş bir satır** ile ayrılır.
+- Başlık satırları `AnahtarKelime: bilgi` biçimindedir.
+
+**Tanımlı Standart Başlıklar:**
+- `From:`, `To:`, `Subject:`, `Cc:`
+
+**Genişletme Başlıkları (`X-` ile Başlayanlar):**
+- Standardı bozmadan özel bilgiler eklemeye yarar (istemci/sunucu tarafından yok sayılabilir):
+```text
+X-Best-networking-Course: CS422 at Purdue
+X-Spam-Check-Results: bulk spam 90% likely
+X-Worst-TV-Shows: any reality show
+```
+
+---
+
+# Çoklu Ortam E-Postası (Multimedia Email)
+
+- **Gözlem**:
+  - E-posta standartları bilgisayarların yalnızca metin tabanlı arayüzlere sahip olduğu dönemde geliştirilmiştir.
+  - SMTP yalnızca düz metin (plain text) iletmeye elverişlidir.
+  - Ancak kullanıcılar fotoğraf, tablo, özel yazı tipleri ve renkli içerikler göndermek istemektedir.
+- **Soru**: SMTP ikili (binary) verileri aktarmak için kullanılabilir mi?
+- **Yanıt**: **Evet**, ikili veriler düz metin karakter dizilerine kodlanarak (encoding) SMTP üzerinden iletilebilir.
+
+---
+
+# Metin Dışı E-Posta ve MIME Standartı
+
+- **MIME (Multipurpose Internet Mail Extensions)**: İkili verileri ve çoklu ortam içeriklerini e-postaya eklemek için standarttır.
+- RFC2822 ve SMTP ile tamamen geriye dönük uyumludur (backward compatible).
+
+**Örnek MIME Başlıkları:**
+```http
+MIME-Version: 1.0
+Content-Type: Multipart/Mixed; Boundary=xyz123
+
+--xyz123
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+
+... [Base64 kodlu resim verisi] ...
+--xyz123--
+```
+
+---
+
+# Dosya Aktarım Protokolü (FTP - File Transfer Protocol)
+
+- İnternet üzerindeki dosya aktarımı için standart protokoldür.
+- Çift bağlantı (two-connection) mimarisine sahiptir:
+  - **Kontrol Bağlantısı (Control Connection)**: İstemci tarafından kurulur; komut ve yanıt iletimi için kullanılır.
+  - **Veri Bağlantısı (Data Connection)**: Her bir dosya veya dizin aktarımı için sunucu tarafından oluşturulur ve aktarım bitince kapatılır.
+- Ayrı bir veri bağlantısı kullanılması her türlü veri tipinin kesintisiz iletilmesini sağlar.
+
+---
+
+<!-- _class: compact -->
+# FTP Etkileşim Akışı (Illustration Of FTP Communication)
+
+- İstemci kontrol bağlantısı kurar (`Control Connection`)
+- İstemci kontrol bağlantısı üzerinden dizin listesi isteği gönderir
+- Sunucu bir veri bağlantısı oluşturur (`Data Connection`)
+- Sunucu dizin listesini veri bağlantısı üzerinden gönderir ve veri bağlantısını kapatır
+- İstemci kontrol bağlantısından dosya indirme isteği gönderir
+- Sunucu yeni bir veri bağlantısı oluşturur ve dosyayı iletir
+- Sunucu aktarım tamamlanınca veri bağlantısını kapatır
+- İstemci `QUIT` komutu gönderir ve kontrol bağlantısını kapatır
+
+---
+
+# Uzaktan Erişim: TELNET ve SSH
+
+- **TELNET**:
+  - Komut satırı arayüzüne (CLI) sahip sistemlere uzaktan erişim sağlar.
+  - Tüm iletişim ve şifreler **açık metin (cleartext)** olarak iletilir (güvensizdir).
+- **SSH (Secure Shell)**:
+  - TELNET'in güvenli alternatifidir. Tüm veri akışını ve kimlik doğrulamasını güçlü kriptografi ile şifreler.
+- **Uzaktan Masaüstü (Remote Desktop)**:
+  - Grafik Kullanıcı Arayüzüne (GUI) sahip sistemler içindir. İnce istemci (thin client) mimarisiyle yeniden yaygınlaşmıştır.
 
 ---
 
 # Alan Adı Sistemi (DNS - Domain Name System)
 
-- İnsanlar isimleri hatırlar (`www.google.com`), bilgisayarlar IP adreslerini kullanır (`142.250.185.78`).
-- **DNS**: İsimler ile IP adresleri arasında dönüşüm yapan dağıtık (distributed) bir veritabanı sistemidir. UDP ve TCP Port `53` üzerinde çalışır.
+- İnternet altyapısının en kritik uygulama katmanı servislerinden biridir.
+- İnsanlar tarafından kolay hatırlanan isimleri (`www.cs.purdue.edu`), İnternet Protokolünün (IP) kullandığı ikili (binary) adreslere (`128.10.19.20`) dönüştürür.
+
+```text
+İnsan Tarafı Adı:  www.cs.purdue.edu
+IP Adresi Karşılığı: 128.10.19.20
+```
 
 ---
 
-# Hiyerarşik İsim Alanı ve Kök Sunucular
+# DNS Terminolojisi ve Yapısı
 
-![center height:300px](images/fig_166_dns_servers.png)
-
-- **Kök Sunucular (Root Servers)**: Hiyerarşinin en tepesindedir (Dünyada 13 kök IP adresi).
-- **Üst Düzey Alan Adı Sunucuları (TLD Servers)**: `.com`, `.org`, `.net`, `.tr` gibi uzantıları yönetir.
-- **Yetkili Sunucular (Authoritative Servers)**: Kurumların kendi domain kayıtlarını tutar.
+- Alan adları hiyerarşiktir ve noktalarla (`.`) bölümlere ayrılır.
+- En önemli bölüm en sağdakidir.
+- En sağdaki bölüm **Üst Düzey Alan Adı (TLD - Top-Level Domain)** olarak adlandırılır.
+- İstemci tarafında isim sorgulaması yapan yazılıma **Çözümleyici (Resolver)** adı verilir (web tarayıcısı ve e-posta istemcileri tarafından kullanılır).
 
 ---
 
-# DNS Adres Çözümleme ve Önbellekleme
+# Üst Düzey Alan Adları (Top-Level Domains - TLD)
 
-![center height:300px](images/fig_167_dns_resolution.png)
+| Üst Düzey Alan Adı | Tahsis Edildiği Kuruluş / Amaç |
+|---|---|
+| **`com`** | Ticari kuruluşlar (Commercial organizations) |
+| **`edu`** | Eğitim kurumları (Educational institutions) |
+| **`gov`** | ABD Hükümeti (United States government) |
+| **`org`** | Kar amacı gütmeyen kuruluşlar (Non-commercial) |
+| **`net`** | Büyük ağ destek merkezleri (Network support) |
+| **`mil`** | ABD Askeri kurumları (United States military) |
+| **Ülke Kodları (`tr`, `de`, `uk`...)** | Egemen devletler (Sovereign nations) |
 
-1. İstemci yerel DNS sunucusuna (Local DNS) başvurur.
-2. Yerel DNS sırasıyla Kök -> TLD -> Yetkili sunucuya sorgu gönderir.
-3. Sonuç yerel DNS'te önbelleğe (cache) alınır ve istemciye döndürülür.
+- ICANN 2014 yılında yüzlerce yeni TLD'ye izin vermiştir.
+
+---
+
+# Alan Adı Kaydı (Domain Registration)
+
+- Kuruluşlar belirli bir TLD altında alan adı başvurusunda bulunur.
+- Kendi iç hiyerarşisini belirleyebilir ve bilgisayarlarına isim atayabilir.
+- **Coğrafi Kayıt**: `cnri.reston.va.us` biçiminde yapılabilir.
+- **Ülke Sözleşmeleri**: İngiltere'deki üniversiteler `.ac.uk` altında kaydolur.
+
+---
+
+# En Çok Barındırıcıya Sahip Alan Adları (Domains With Most Hosts)
+
+| Alan Adı | Açıklama | Alan Adı | Açıklama |
+|---|---|---|---|
+| **`net`** | Ağlar | **`de`** | Almanya |
+| **`com`** | Ticari | **`tr`** | Türkiye |
+| **`jp`** | Japonya | **`uk`** | Birleşik Krallık |
+| **`edu`** | Eğitim | **`ca`** | Kanada |
+
+---
+
+# Barındırıcı Adları ve Sunulan Hizmetler
+
+- Kuruluşlar genellikle bilgisayar adını sunduğu hizmetle eşleştirir:
+  - `mail.foobar.com`
+  - `ftp.foobar.com`
+  - `www.foobar.com`
+- İnsanlar için kolaylık sağlasa da, barındırıcı adı sunucuda hangi servislerin çalıştığını kısıtlamaz (örneğin `mail` isimli bir bilgisayar web sunucusu da çalıştırabilir).
+
+---
+
+# DNS Sunucuları Hiyerarşisi
+
+![center height:260px](images/fig_166_dns_servers.png)
+
+- Sunucu hiyerarşisi: **Kök Sunucular (Root)** $\rightarrow$ **TLD Sunucuları (`com`)** $\rightarrow$ **Yetkili Sunucular (`foobar.com`)**.
+
+---
+
+# Ad Çözümleme ve Önbellekleme (Name Resolution & Caching)
+
+- **Çözümleyici (Resolver)**: Yerel DNS sunucusunun adresiyle yapılandırılır ve ilk sorguyu yerel sunucuya gönderir (Soket kütüphanesindeki karşılığı `gethostbyname`).
+- **Önbellekleme (Caching)**:
+  - Referans yerelliği (locality of reference) ilkesini izler.
+  - Her DNS sunucusu elde ettiği yanıtları önbelleğe alır.
+  - Süresi dolan (stale) önbellek kayıtları otomatik temizlenir.
+
+---
+
+<!-- _class: compact -->
+# DNS Sunucu Algoritması (DNS Server Algorithm)
+
+```c
+/* Giren: DNS çözümleyiciden gelen sorgu mesajı (İsim N) */
+/* Çıkan: N için IP adresini içeren yanıt mesajı */
+
+if ( sunucu N için yetkili ise (authority) ) {
+    Yetkili yanıt oluştur ve istemciye gönder;
+} else if ( N yanıtı önbellekte (cache) mevcut ise ) {
+    Yetkisiz (nonauthoritative) yanıt oluştur ve gönder;
+} else { /* Yanıt başka bir sunucudan sorgulanmalı */
+    if ( N için yetkili sunucu biliniyorsa ) {
+        Sorguyu yetkili sunucuya gönder;
+    } else {
+        Sorguyu Kök (Root) sunucuya gönder;
+    }
+    Yanıtı al, önbelleğe kaydet ve istemciye ilet;
+}
+```
 
 ---
 
 <!-- _class: lead -->
-# Bölüm 2.6: Özet
+# Modül 2 Özeti (Summary)
+
+- Tüm İnternet servisleri uygulama katmanı yazılımları tarafından sunulur.
+- İletişim akış (stream) veya mesaj (message) paradigması ile gerçekleşir.
+- Uygulamaların çoğu **İstemci-Sunucu (Client-Server)** yaklaşımını izler.
+- **Soket API (Socket API)** fiili endüstri standardıdır.
+- Uygulama protokolleri **Veri Temsili** ve **Veri Aktarımı** kurallarını tanımlar.
+- İncelenen protokoller: Web (HTTP), E-Posta (SMTP/MIME), FTP, TELNET/SSH ve DNS.
 
 ---
 
-# Modül 2 Özeti
-
-- Uygulama katmanı İnternet mimarisinin en üst katmanıdır ve zeka ağın uçlarındadır.
-- **Akış (TCP)** ve **Mesaj (UDP)** olmak üzere iki temel iletişim modeli vardır.
-- **Soket API**, uygulamaların TCP/IP protokol yığınına erişmesini sağlar.
-- Web uygulamaları **HTTP**, **HTML** ve **URL** üzerine kuruludur.
-- E-Posta **SMTP**, **POP3/IMAP** ve **MIME** standartlarını kullanır.
-- **FTP** kontrol ve veri kanallarını birbirinden ayırır.
-- **DNS**, İnternet üzerindeki isim-IP dönüşümünü sağlayan dağıtık bir sistemdir.
+<!-- _class: lead -->
+# Sorular?
