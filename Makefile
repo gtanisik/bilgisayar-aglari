@@ -19,11 +19,11 @@ html: $(HTML_FILES)
 
 $(DIST_DIR)/%.pdf: $(SLIDES_DIR)/%.md $(THEME_CSS)
 	@mkdir -p $(dir $@)
-	marp --no-stdin --allow-local-files $< -o $@ --pdf --theme-set $(THEME_CSS)
+	marp --no-stdin --html --allow-local-files $< -o $@ --pdf --theme-set $(THEME_CSS)
 
 $(DIST_DIR)/%.html: $(SLIDES_DIR)/%.md $(THEME_CSS)
 	@mkdir -p $(dir $@)
-	marp --no-stdin --allow-local-files $< -o $@ --theme-set $(THEME_CSS)
+	marp --no-stdin --html --allow-local-files $< -o $@ --theme-set $(THEME_CSS)
 
 clean:
 	rm -rf $(DIST_DIR)

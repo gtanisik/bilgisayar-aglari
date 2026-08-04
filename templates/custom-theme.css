@@ -178,20 +178,46 @@ footer {
 }
 
 code {
-  background-color: #e9ecef;
-  color: #d63384;
-  padding: 3px 8px;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  padding: 2px 7px;
+  border: 1px solid #e2e8f0;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 0.88em;
 }
 
 pre {
-  background-color: #212529;
-  color: #f8f9fa;
-  padding: 18px;
+  background-color: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  padding: 14px 18px;
   border-radius: 6px;
   line-height: 1.4;
-  font-size: 0.85em;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 0.82em;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 1em;
+}
+
+/* Syntax highlighting token overrides for Marp light theme */
+pre .hljs-keyword, pre .hljs-selector-tag, pre .hljs-subst {
+  color: #0369a1;
+  font-weight: 600;
+}
+pre .hljs-string, pre .hljs-title, pre .hljs-section, pre .hljs-attribute, pre .hljs-literal {
+  color: #15803d;
+}
+pre .hljs-number, pre .hljs-symbol, pre .hljs-bullet {
+  color: #b91c1c;
 }
 
 .highlight {
@@ -221,3 +247,20 @@ p:has(img[alt*="center"]) {
   text-align: center;
 }
 
+/* Protocol log styling (SMTP, FTP, Telnet examples) */
+.protocol-log {
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 0.82em;
+  line-height: 1.5;
+  white-space: pre;
+}
+.protocol-log .srv {
+  color: #b91c1c;
+}
+.protocol-log .cli {
+  color: #1d4ed8;
+}
