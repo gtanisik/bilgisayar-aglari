@@ -101,4 +101,27 @@ Gelecek tüm modüllerde (Modül 2 - 7) strictly uygulanacak temel tasarım ve i
 ### C. Temiz Proje Yapısı (Clean Repository)
 - Slaytlarda artık kullanılmayan veya yerini PNG'ye bırakan eski SVG/görsel dosyaları, çalışma esnasında kazaen silme riskini önlemek adına **`git commit` veya `git push` öncesinde kontrol edilerek** proje klasöründen (`images/`) temizlenmelidir.
 
+---
 
+## 5. Modül 3-7 Slayt Üretim Kuralları (2026-08-06)
+
+### Başlık Politikası
+- Başlığa İngilizce parantez **eklenir**: Teknik kısaltma (FDM, TDM, TCP, IP, MAC, CRC, FEC, NAT, BGP, OSPF, vb.) veya özel isim/teorem (Nyquist, Shannon, Hamming, Fourier, Manchester) içeriyorsa.
+- Başlığa İngilizce parantez **eklenmez**: "Motivasyon", "Özet", "Soru", "Terminoloji", "Değerlendirme", "Örnekler", "Temel Kavram" gibi bariz ve genel Türkçe karşılığı olan başlıklarda.
+
+### Görsel Placeholder Formatı
+Görsel gerektiren slaytlar için standart format:
+```
+> 📷 *[Görsel: [kısa açıklama] — yakında eklenecek]*
+```
+- Görsel + metin içeren sayfalarda: önce metin maddeleri, sonra placeholder.
+- Sadece görsel olan sayfalarda: yalnızca placeholder.
+
+### Build-up (Kademeli) Slaytlar
+- Aynı başlıklı ama giderek içerik eklenen PDF sayfaları tek slayta birleştirilir.
+- Yalnızca son ve en dolu hali alınır.
+
+### Protokol Log Renklendirmesi (CSS)
+`templates/custom-theme.css` dosyasına `.protocol-log`, `.srv` (kırmızı), `.cli` (mavi) sınıfları eklendi.
+Kullanım: `<div class="protocol-log"><span class="srv">S: ...</span><span class="cli">C: ...</span></div>`
+Makefile'da `--html` bayrağı gerekli (eklendi).
