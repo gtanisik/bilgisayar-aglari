@@ -265,7 +265,7 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
   - Fonksiyonlar kümesidir.
   - Veri aktarımının yanı sıra kontrol fonksiyonlarını da içerir (örneğin iletişimi kurma ve sonlandırma).
 - İşletim sistemi tarafından tanımlanır; İnternet standartlarının bir parçası değildir.
-- **Soket API (Socket API)** fiili bir standart (de facto standard) haline gelmiştir.
+- **Soket API (Socket API)** fiili bir standart haline gelmiştir.
 
 ---
 
@@ -349,7 +349,7 @@ footer: 'Adapted from D. E. Comer (Prentice-Hall)'
 # Soket API ve Tarihçesi
 
 - Orijinal olarak **BSD Unix** işletim sisteminin bir parçası olarak geliştirilmiştir (1983).
-- Günümüzde endüstride **fiili standart** (de facto standard) haline gelmiştir.
+- Günümüzde endüstride **fiili standart** haline gelmiştir.
 - AT&T, **TLI** (Transport Layer Interface) adında alternatif bir arayüz tanımlamıştı; ancak TLI artık kullanılmamaktadır.
 - Neredeyse tüm işletim sistemleri soket uygulamasını içerir.
 - Microsoft Windows küçük değişiklikler yapmayı tercih etmiştir (Winsock - rahatsız edici bir ayrıntı).
@@ -691,14 +691,15 @@ X-Worst-TV-Shows: any reality show
 
 ---
 
-# Uzaktan Erişim ve Uzaktan Masaüstü (Remote Login And Remote Desktop)
+<!-- _class: compact -->
+# Uzaktan Erişim ve Uzakt Masaüstü
 
 - **Uzaktan Erişim (Remote Login)**:
   - Komut satırı arayüzüne (CLI) sahip sistemler içindir.
   - İnternet standardı **TELNET**'tir.
   - Güvenli kabuk (SSH) aktarımları şifreler.
   - Uygulama protokollerinin karmaşıklığını kavramak için TELNET standardına bakınız.
-- **Uzaktan Masaüstü (Remote Desktop)**:
+- **Uzak Masaüstü (Remote Desktop)**:
   - Grafik Kullanıcı Arayüzüne (GUI) sahip sistemler içindir.
   - İnternet standardı yoktur.
   - İnce istemci (thin client) mimarisine geçiş, ilgiyi yeniden canlandırmıştır.
@@ -769,7 +770,7 @@ X-Worst-TV-Shows: any reality show
 
 ---
 
-# Barındırıcı Adları ve Sunulan Hizmetler (Host Names and Services Offered)
+# Ana Bilgisayar Adları (Host Names) ve Sunulan Hizmetler
 
 - Birçok kuruluş, barındırıcı adını bilgisayarın sunduğu hizmetle eşleşecek şekilde seçer:
   - `mail.foobar.com`
@@ -783,11 +784,13 @@ X-Worst-TV-Shows: any reality show
 
 - Adlar bir sunucu hiyerarşisine bölünmüştür.
 - Birden fazla gruplama mümkündür.
+- Örnek:
 
-![center height:260px](images/fig_166_dns_servers.png)
+![center height:280px](images/fig_166_dns_servers.png)
 
 ---
 
+<!-- _class: compact -->
 # Ad Çözümleme ve Önbellekleme (Name Resolution & Caching)
 
 - **Çözümleyici (Resolver)**:
@@ -798,7 +801,7 @@ X-Worst-TV-Shows: any reality show
 - **Önbellekleme (Caching)**:
   - Referans yerelliği (locality of reference) ilkesini izler.
   - Her DNS sunucusu sonuçları önbelleğe alır.
-  - Süresi dolan (stale) önbellek ögeleri asla tutulmaz.
+  - Süresi dolan önbellek ögeleri asla tutulmaz.
 
 ---
 
@@ -825,8 +828,8 @@ if ( sunucu N için yetkili ise (authority) ) {
 
 ---
 
-<!-- _class: lead -->
-# Modül 2 Özeti (Summary)
+<!-- _class: compact -->
+# Modül 2 Özeti
 
 - Tüm İnternet hizmetlerini uygulamalar sağlar.
 - İnternet, bağlantı tabanlı akış (stream) veya bağlantısız mesaj (message) iletişimi sunar.
@@ -837,6 +840,12 @@ if ( sunucu N için yetkili ise (authority) ) {
 - Uygulama katmanı protokolü şunları tanımlayabilir:
   - Veri ve mesaj biçimleri (temsil / representation)
   - Mesaj alışverişi kuralları (aktarım / transfer)
+
+---
+
+<!-- _class: lead -->
+# Modül 2 Özeti
+
 - İncelenen uygulamalar:
   - Web (URL, HTML, HTTP)
   - E-Posta (SMTP, RFC2822, MIME)
