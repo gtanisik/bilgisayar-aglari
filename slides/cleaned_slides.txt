@@ -1,0 +1,2731 @@
+=== SLIDE 0 ===
+MODULE IV
+
+Computer Network Technologies:
+Access, Wired And Wireless LANs,
+Extensions, Bridging, And
+Layer 2 Switching
+
+=== SLIDE 1 ===
+Topics
+d Access technologies
+d Interconnection technologies
+d Local area network packets, frames, and topologies
+d Media access mechanisms and the IEEE MAC sub-layer
+d Wired LAN technologies (Ethernet and 802.3)
+d Wireless Networking Technologies
+d LAN Extensions
+d Switches and switched networks
+
+=== SLIDE 2 ===
+Access Technologies
+
+=== SLIDE 3 ===
+Definition Of Access
+d Used in the “last mile” between a provider and a subscriber
+d Informally classified as either narrowband or broadband
+d May not be the bottleneck
+d Many are asymmetric with higher data rate downstream
+provider’s
+facility
+eam
+
+downstr
+
+subscriber’s
+location
+upstream
+
+d Note: party that is downstream pays a fee for service
+
+=== SLIDE 4 ===
+Access Technology Types
+d Narrowband (less than 128 Kbps)
+–
+
+Dialup
+
+–
+
+Integrated Services Digital Network (ISDN)
+
+–
+
+Is disappearing
+
+d Broadband (more than 128 Kbps)
+–
+
+Digital Subscriber Line (DSL)
+
+–
+
+Cable modems
+
+–
+
+Wireless (e.g., Wi-Fi and 4G)
+
+=== SLIDE 5 ===
+Digital Subscriber Line (DSL) Technologies
+d Use frequency-division multiplexing to share local loop
+between data and POTS
+d Head-end equipment is DSL Access Multiplexor (DSLAM)
+d Asymmetric Digital Subscriber Line (ADSL)
+–
+
+255 downstream carrier frequencies, 31 upstream
+
+–
+
+Maximum downstream data rate is 8.45 Mbps
+
+–
+
+Adaptive selection of carrier frequencies
+
+POTS
+
+upstream
+
+downstream
+
+KHz
+
+=== SLIDE 6 ===
+Cable Modem Technology
+d Sends data over CATV coaxial cable system
+d Standard is DOCSIS (Data-Over-Cable Service Interface
+Specification)
+d Head-end equipment known as Cable Modem Termination
+System (CMTS)
+d Version 1.x uses frequency-division multiplexing
+d Maximum downstream data rate is 52 Mbps
+d Bandwidth shared among multiple subscribers
+–
+
+Each subscriber receives
+of the bandwidth
+N
+
+–
+
+Cable company chooses N
+
+=== SLIDE 7 ===
+Other Access Technologies
+(continued)
+d Wireless
+–
+
+Wi-Fi
+
+–
+
+WIMAX
+
+–
+
+Satellite
+
+–
+
+3G and 4G cellular services
+
+d Leased point-to-point circuits (e.g., T1 or fractional T1)
+
+=== SLIDE 8 ===
+Interconnection Technologies
+
+=== SLIDE 9 ===
+Interconnections At The Core Of The Internet
+d Typically needed by large ISPs
+d Circuits leased from common carriers (phone companies)
+d Terminated with a Data Service Unit / Channel Service Unit
+(DSU/ CSU)
+d Upstream interface aggregates many lower-speed access
+connections
+d Key idea: data rates based on voice
+–
+
+Basic data rate: single digital voice channel (64 Kbps)
+
+–
+
+Higher data rate circuits created from multiples of voice
+channels
+
+d SONET encoding and framing used
+
+=== SLIDE 10 ===
+Example Data Rates Of Leased Circuits
+1 Name
+1 Voice Circuits 1
+Bit Rate
+Location
+1 basic rate 1 0.064 Mbps 1
+1 1.544 Mbps 1
+1 North America 1
+T1
+T2
+6.312 Mbps
+North America 1
+1 44.736 Mbps 1
+1 North America 1
+T3
+E1
+2.048 Mbps
+Europe
+1 8.448 Mbps 1
+1 Europe
+E2
+E3
+34.368 Mbps
+Europe
+
+d T-standards used in North America
+d E-standards used in Europe
+d Note: T prefix specifies encoding as well as data rate; data
+rate alone is given by Digital Signal Level (DS) standards
+
+=== SLIDE 11 ===
+High Capacity Data Circuits
+2 2222222222222222222222222222222222222222222222222222222222222222
+1 Copper Name 1 Optical Name 1
+1 Voice Circuits 1
+Bit Rate
+21 2222222222222222222222222222222222222222222222222222222222222222
+STS-1
+OC-1
+51.840 Mbps
+21 2222222222222222222222222222222222222222222222222222222222222222
+STS-3
+OC-3
+155.520 Mbps 1
+21 2222222222222222222222222222222222222222222222222222222222222222
+STS-12
+OC-12
+622.080 Mbps
+21 2222222222222222222222222222222222222222222222222222222222222222
+1 1,244.160 Mbps 1
+STS-24
+OC-24
+21 2222222222222222222222222222222222222222222222222222222222222222
+STS-48
+OC-48
+2,488.320 Mbps
+1 9,953.280 Mbps 1
+STS-192
+OC-192
+
+d STS standards specify copper interface
+d OC standards specify optical fiber interface
+d Suffix C on OC-standards means single channel
+
+=== SLIDE 12 ===
+Local Area Networks:
+(Packets, Frames, Topologies)
+
+=== SLIDE 13 ===
+Networks
+d Distinct from physical communication systems
+d Attach multiple endpoints
+d Two broad categories
+–
+
+Circuit switched
+
+–
+
+Packet switched
+
+=== SLIDE 14 ===
+Circuit Switched Networks
+d Provide point-to-point communication between pairs of
+endpoints
+d Establish path between sender and receiver
+d Separate steps for circuit creation, use, and termination
+d Performance equivalent to an isolated physical path
+d Circuit can be
+–
+
+Permanent/ provisioned (left in place for long periods)
+
+–
+
+Switched (created on demand)
+
+d Concept: user leases piece of underlying infrastructure for a
+time period
+
+=== SLIDE 15 ===
+Packet Switched Networks
+d Form the basis for the Internet
+d Multiplex communication over shared media
+d All data divided into packets (maximum size fixed)
+d After sending one packet, sender allows others a chance to
+transmit before sending a second packet
+d Arbitrary, asynchronous communication
+d No set-up required before communication begins
+d Performance varies due to statistical multiplexing
+d Concept: underlying infrastructure is shared among users
+
+=== SLIDE 16 ===
+Illustration Of Circuit And Packet Switching
+d Circuit switching provides 1-to-1 dedicated connections
+circuit-switched network
+
+d Packet switching provides statistical TDM sharing
+packet-switched network
+
+...
+
+=== SLIDE 17 ===
+Categories Of Packet Switched Networks
+1 Name 1
+Expansion
+Description
+1 LAN 1 Local Area Network
+1 Least expensive; spans a single 1
+room or a single building
+1 MAN 1 Metropolitan Area Network 1 Medium expense; spans a major 1
+city or a metroplex
+WAN
+Wide
+Area
+Network
+Most
+expensive;
+spans
+sites
+in
+multiple cities
+
+d Everyone loves names that end in “AN”
+1 Name 1
+Expansion
+Description
+1 PAN 1 Personal Area Network 1 Spans the area around an individual
+used for earphones
+1 SAN 1 Storage Area Network 1 Spans the distance between a disk
+farm
+and
+processors
+in
+a
+data
+center
+CAN
+Chip
+Area
+Network
+Spans
+a
+single
+chip
+and
+connects
+processor, memories, etc.
+
+=== SLIDE 18 ===
+Standards Bodies And Their Bias
+d Standards bodies and academic departments each emphasize
+certain layers of a protocol stack, leading to the following
+views
+
+Application
+Transport
+
+TRANSPORT
+
+APPLICATION
+
+DATA LINK
+
+Internet
+INTERNET
+
+Data Link
+
+PHYSICAL
+
+Physical
+
+textbooks
+
+
+W3C
+
+IETF
+
+
+IEEE
+
+=== SLIDE 19 ===
+IEEE 802 Model And Standards
+d IEEE (Institute of Electrical and Electronics Engineers)
+–
+
+Professional society of engineers
+
+–
+
+Standardizes vendor-independent technologies
+
+d Project 802
+–
+
+LAN/ MAN standards committee
+
+–
+
+Organized in 1980
+
+–
+
+Focuses on layer 1 and layer 2 standards
+
+–
+
+Divides layer 2 into two sublayers
+*
+
+Logical Link Control (LLC)
+
+*
+
+Media Access Control (MAC)
+
+=== SLIDE 20 ===
+Example IEEE Standards
+ID
+Topic
+21 222222222222222222222222222222222222222222222222222222222
+1 802.1 1 Higher layer LAN protocols
+21 222222222222222222222222222222222222222222222222222222222
+1 802.2 1 Logical link control
+21 222222222222222222222222222222222222222222222222222222222
+1 802.3 1 Ethernet
+802.4
+Token
+bus
+(disbanded)
+802.5
+Token
+Ring
+802.6
+Metropolitan
+Area
+Networks
+(disbanded)
+21 222222222222222222222222222222222222222222222222222222222
+1 802.7 1 Broadband LAN using Coaxial Cable (disbanded) 1
+21 222222222222222222222222222222222222222222222222222222222
+1 802.9 1 Integrated Services LAN (disbanded)
+1 802.10 1 Interoperable LAN Security (disbanded)
+Wireless LAN (Wi-Fi)
+12802.11
+802.12
+Demand
+priority
+
+=== SLIDE 21 ===
+More Example IEEE Standards
+ID
+Topic
+1 802.13 1 Category 6 - 10Gb LAN
+1 802.14 1 Cable modems (disbanded)
+1 802.15 1 Wireless PAN
+802.15.1
+(Bluetooth)
+1 802.15.4 (ZigBee)
+1 802.16 1 Broadband Wireless Access
+1 802.16e (Mobile) Broadband Wireless 1
+802.17
+Resilient
+packet
+ring
+802.18
+Radio
+Regulatory
+TAG
+1 802.19 1 Coexistence TAG
+1 802.20 1 Mobile Broadband Wireless Access
+1 802.21 1 Media Independent Handoff
+1 802.22 1 Wireless Regional Area Network
+
+=== SLIDE 22 ===
+Standards Define
+d Network topology (shape)
+d Endpoint addressing scheme
+d Frame (packet) format
+d Media access mechanism
+d Physical layer aspects and wiring
+
+=== SLIDE 23 ===
+Illustration Of The Four LAN Topologies
+
+Bus
+
+Ring
+
+Mesh
+
+Star
+
+d Each topology has advantages and disadvantages
+
+=== SLIDE 24 ===
+Endpoint Addressing Scheme
+d Each station on a LAN is assigned a unique address
+d Each packet specifies a destination address
+d LAN hardware uses the address in a packet to determine
+which station(s) receive a copy
+
+=== SLIDE 25 ===
+IEEE Standard For Addressing
+d Formal name: IEEE Media Access Control address (MAC
+address)
+d Informally called an Ethernet address
+d Each address is 48 bits long
+d Assigned to Network Interface Card (NIC) when device
+manufactured
+d Divided into subfields
+–
+
+3-byte Organizationally Unique ID (OUI)
+
+–
+
+3-byte Network Interface Controller (NIC)
+
+=== SLIDE 26 ===
+Illustration Of Fields In An IEEE 48-Bit Address
+3 bytes
+
+3 bytes
+
+Organizationally Unique
+Identifier (OUI)
+
+Network Interface Controller
+(NIC) specific
+
+bits of most significant byte
+
+
+
+
+
+
+
+0 → unicast, 1→ multicast
+0 → global, 1→ local
+
+d Address types
+
+1 Address Type 1
+Meaning And Packet Delivery
+1 Destination is a single computer; only that computer 1
+unicast
+1 should receive a copy of the packet
+broadcast
+Destination
+is
+all
+computers
+on
+a
+network;
+they
+1 should each receive a copy of the packet
+1 A subset of the computers on a network should
+multicast
+1 receive a copy of the packet
+
+=== SLIDE 27 ===
+Algorithm For Processing An Incoming Packet
+
+Purpose:
+Handle a packet that has arrived over a LAN
+Method:
+Extract
+destination
+address,
+D,
+from
+the
+packet;
+if
+(
+D
+matches
+“my
+address”
+)
+{
+accept and process the packet;
+}
+else
+if
+(
+D
+matches
+the
+broadcast
+address
+)
+{
+accept
+and
+process
+the
+packet;
+} else if ( D matches one of the multicast addresses for a
+multicast
+group
+of
+which
+I
+am
+a
+member
+)
+{
+accept and process the packet;
+} else {
+ignore
+the
+packet;
+}
+
+=== SLIDE 28 ===
+Frame Format
+d Layer 2 packet is called a frame
+d General layout of a frame
+optional prelude
+
+optional postlude
+
+HEADER
+
+PAYLOAD
+
+d Header usually has fixed fields
+d Each technology imposes a maximum payload size
+d Note: we will see specific frame formats later
+
+=== SLIDE 29 ===
+Framing And Serial Communications Systems
+d Consider sending packets over a leased circuit
+d Circuit hardware either provides a stream of bits or a stream
+of bytes (characters)
+d We will consider hardware that provides a byte stream
+–
+
+No frame boundaries
+
+–
+
+Any 8-bit value can appear in the data
+
+d How can we send packets over such a system?
+d Answer: sender and receiver must agree on framing
+
+=== SLIDE 30 ===
+Example Framing Used With A Leased Circuit
+d Use SOH and EOT characters to mark the start and end of a
+frame
+
+SOH
+
+6 bytes
+
+arbitrary bytes
+
+HEADER
+
+PAYLOAD
+
+EOT
+
+d Use byte stuffing within the payload
+1 Byte In Payload 1 Sequence Sent 1
+21 2222222222222222222222222222222222
+SOH
+ESC A
+21 2222222222222222222222222222222222
+EOT
+ESC B
+ESC
+ESC C
+
+=== SLIDE 31 ===
+Illustration Of Byte Stuffing
+original data
+ESC
+
+ESC
+
+C
+
+ESC
+
+SOH
+
+EOT
+
+A
+
+ESC
+
+ESC
+
+B
+
+ESC
+
+C
+
+stuffed data
+
+d Internet uses SLIP or PPP (standards) for transmission over
+serial circuits
+d Bit stuffing techniques are also available for systems that
+transfer a stream of bits
+
+=== SLIDE 32 ===
+Media Access Mechanisms
+(IEEE MAC Sublayer)
+
+=== SLIDE 33 ===
+MAC Protocols
+d Control access to shared medium
+d Two types of channel allocation
+–
+
+Static
+
+–
+
+Dynamic
+
+d General principle:
+Static channel allocation suffices when the set of
+communicating entities is known in advance and does not
+change; most networks require a form of dynamic channel
+allocation.
+
+=== SLIDE 34 ===
+Taxonomy Of Media Access Mechanisms
+Reservation
+Controlled Access
+Protocols
+
+Polling
+
+Token passing
+
+ALOHA
+Multi-Access
+Protocols
+
+Random Access
+Protocols
+
+CSMA / CD
+
+CSMA / CA
+
+FDMA
+Channelization
+Protocols
+
+TDMA
+
+CDMA
+
+=== SLIDE 35 ===
+Channelization Protocols
+d Employ and extend basic multiplexing techniques
+d May be static or dynamic
+d Three basic types
+1 Protocol 1
+Expansion
+1 FDMA 1 Frequency Division Multi-Access 1
+1 TDMA 1 Time Division Multi-Access
+1 CDMA 1 Code Division Multi-Access
+
+=== SLIDE 36 ===
+Controlled Access Protocols
+d Three principal forms
+Type
+Description
+21 2222222222222222222222222222222222222222222222222222222222222222
+Polling
+Centralized controller repeatedly polls stations 1
+1 and allows each to transmit one packet
+1 Reservation 1 Stations submit a request for the next round of 1
+1 data transmission
+1 Token Passing 1 Stations circulate a token; each time it receives 1
+1 the token, a station transmits one packet
+
+d All three have been used in practice
+
+=== SLIDE 37 ===
+Algorithm For Polled Access
+
+
+
+
+
+Purpose:
+
+
+Control transmission of packets through polling
+
+
+
+
+
+Method:
+
+
+
+
+
+
+Controller repeats forever {
+Select a station, S, and send a polling message to S;
+Wait for S to respond by sending a packet or passing;
+}
+
+=== SLIDE 38 ===
+Algorithm For Reservation-Based Access
+d Often used with satellite systems
+
+
+
+d Stations inform a controller if they have data to send
+
+
+Purpose:
+
+
+
+
+Control transmission of packets through reservation
+
+
+
+
+Method:
+
+
+
+
+
+
+
+Controller repeats forever {
+Form a list of stations that have a packet to send;
+Allow each station on the list to transmit;
+}
+
+=== SLIDE 39 ===
+Algorithm For Token Passing Access
+d Special packet known as a token passed among senders
+
+
+
+d Station sends one packet each time token arrives
+
+
+Purpose:
+
+
+
+
+Control transmission of packets through token passing
+
+
+
+
+Method:
+
+
+Each computer on the network repeats {
+Wait for the token to arrive;
+Transmit a packet if one is waiting to be sent;
+Send the token to the next station;
+}
+
+=== SLIDE 40 ===
+Example Random Access Protocols
+
+Type
+Description
+1 ALOHA 1 Historic protocol used in an early radio network in
+1 Hawaii; popular in textbooks and easy to analyze,
+but
+not
+used
+in
+real
+networks
+1 CSMA / CD 1 Carrier Sense Multi-Access with Collision Detection
+1 The basis for the original Ethernet, and the most widely 1
+1 used random access protocol
+CSMA
+/
+CA
+Carrier
+Sense
+Multi-Access
+with
+Collision
+Avoidance
+The
+basis
+for
+Wi-Fi
+wireless
+networks
+
+=== SLIDE 41 ===
+Aloha
+d Used in early network in Hawaii (ALOHAnet)
+d Two carrier frequencies, inbound and outbound
+d Central transmitter rebroadcast each incoming packet
+outbound frequency
+
+inbound frequency
+central
+transmitter
+outlying station
+
+d If inbound packets collide, each sender waits a random time
+and retransmits
+d Channel utilization under 20%
+
+=== SLIDE 42 ===
+CSMA / CD
+d Used in original Ethernet (1973)
+d Provides access to shared medium
+d Principle features
+–
+
+Carrier Sense (CS)
+
+–
+
+Multiple Access (MA)
+
+–
+
+Collision Detection (CD)
+
+d Uses binary exponential backoff
+
+=== SLIDE 43 ===
+CSMA / CD Algorithm
+
+
+
+
+Method:
+
+Set variable x to the standard backoff range, d ;
+
+
+
+
+
+
+Delay for the interpacket gap;
+Attempt to transmit the packet and perform CD;
+
+
+
+While (collision occurred during transmission) {
+
+
+When a packet is ready, perform CS (wait for access);
+
+
+
+
+
+
+
+Choose q to be a random delay between 0 and x ;
+
+
+
+
+Delay for q microseconds;
+Double x in case needed for the next round;
+
+
+
+Attempt to retransmit the packet and perform CD;
+
+
+
+
+
+
+
+}
+
+=== SLIDE 44 ===
+CSMA / CA
+d Alternative to CSMA / CD
+d Used in wireless networks (Wi-Fi)
+d Needed because signals have limited distance, δ
+d Example: computer 1 cannot receive transmission when
+computers 2 and 3 communicate
+
+δ
+
+computer 1
+
+δ
+
+computer 2
+
+computer 3
+
+d All computers in range of computers 2 and 3 must be
+informed that a transmission will occur
+
+=== SLIDE 45 ===
+Illustration Of CSMA / CA
+1: ready to send (RTS)
+2: clear to send (CTS)
+
+2: clear to send (CTS)
+3: packet transmission
+
+computer 1
+
+computer 2
+
+computer 3
+
+d Communicating pair exchange RTS and CTS before packet
+transmission
+d Any computer less than δ away from either computer 2 or 3
+hears at least one of the RTS / CTS messages
+
+=== SLIDE 46 ===
+Wired LAN technologies
+(Ethernet and 802.3)
+
+=== SLIDE 47 ===
+Wired LAN Technologies
+d Explosion of technologies and products during 1980s
+d Consolidation during the 1990s
+d Currently: one de facto wired LAN standard
+
+Ethernet
+
+=== SLIDE 48 ===
+Ethernet Technology
+d Invented at Xerox PARC in 1973
+d Standardized by Digital, Intel, and Xerox (DIX) in 1978
+d Frame has a 14-byte header followed by payload of 46 to
+1500 bytes
+d Frame format and addressing have survived virtually
+unchanged
+header
+
+46 - 1500 bytes of payload
+
+4-byte CRC
+6-byte
+destination address
+
+
+6-byte
+source address
+
+2-byte
+type
+
+
+header details
+
+=== SLIDE 49 ===
+Ethernet Address Filtering
+d Recall: station accepts a copy of the frame if destination
+address matches
+–
+
+The station’s unicast address
+
+–
+
+The broadcast address (all 1s)
+
+–
+
+A multicast address to which station is listening
+
+d Other frames are ignored
+d Promiscuous mode allows a station to receive all frames
+regardless of address
+–
+
+Basis of protocol analyzer software such as Wireshark
+
+=== SLIDE 50 ===
+Question
+If one is looking at the bits of an Ethernet frame as the frame is
+transmitted across a wire, which bit specifies whether the frame
+has been sent to a unicast destination address? Hint: look at the
+48-bit MAC address format, the Ethernet header format and the
+byte and bit ordering (Module 2).
+
+=== SLIDE 51 ===
+Frame Type Field
+d 2-octet field in frame header
+d Set by sender to identify contents of frame
+d Used by receiver to determine how to process the frame
+d Values are standardized
+d Examples:
+–
+
+Type 0x0800 used for IPv4 datagram
+
+–
+
+Type 0x86DD used for IPv6 datagram
+
+–
+
+Type 0x0806 used for ARP
+
+=== SLIDE 52 ===
+Illustration Of Frame Demultiplexing
+
+IPv4
+module
+
+IPv6
+module
+
+
+86DD
+
+demultiplexing
+
+frame
+arrives
+
+d Performed when frame arrives
+d Usually handled by protocol software
+d Frame type field examined and frame passed to appropriate
+protocol module; unrecognized types are discarded
+
+=== SLIDE 53 ===
+IEEE’s Version Of Ethernet
+d Standardized in 1983 as IEEE standard 802.3
+d Not widely adopted
+d Header type field reinterpreted as a frame length
+d Eight bytes of payload occupied by LLC / SNAP header
+
+header
+
+new
+hdr.
+
+46 - 1492 bytes of payload
+
+4-byte CRC
+IEEE LLC / SNAP Header
+48-bit destination
+address
+
+
+48-bit source
+address
+
+16-bit
+length
+
+
+24-bit
+LLC
+
+24-bit
+OUI
+
+16-bit
+type
+
+=== SLIDE 54 ===
+Ethernet Wiring
+d Evolved through three generations
+–
+
+Thicknet
+
+–
+
+Thinnet
+
+–
+
+Twisted pair
+
+d Illustrate a range of possible network wiring schemes
+
+=== SLIDE 55 ===
+Illustration Of Thicknet Wiring
+
+terminator
+thick Ethernet cable
+
+transceiver
+AUI cable
+
+computer with NIC
+
+d Heavy coaxial cable typically in the ceiling
+d Each computer attached to the cable
+
+=== SLIDE 56 ===
+Illustration Of Thinnet Wiring
+computer with NIC
+Thinnet cable
+terminator
+
+d Flexible coaxial cable
+d Connections run point-to-point among computers
+d Disadvantage: user can disconnect the network
+
+=== SLIDE 57 ===
+Illustration Of Twisted Pair Ethernet Wiring
+twisted pair wiring
+
+computer with NIC
+hub
+
+d Unshielded or shielded twisted pairs using RJ45 connectors
+d Multiple pairs allows full-duplex operation
+d Each computer connects to central hub
+d Topology is physical star, but logical bus
+d Hub is known as “bus in a box”
+
+=== SLIDE 58 ===
+Evolution Of Twisted Pair Ethernet Technologies
+d Several variants of twisted pair Ethernet have been created
+d Variants differ in data rate and wiring required
+1 Designation 1
+1 Data Rate 1 Cable Used 1
+Name
+21 2222222222222222222222222222222222222222222222222222222
+1 Twisted Pair 1
+1 10BaseT
+1 Ethernet
+1 10 Mbps 1 Category 5 1
+1 100BaseT 1 Fast
+1 100 Mbps 1 Category 5E 1
+1 Ethernet
+1 Gigabit
+1 Gbps 1 Category 6 1
+1 1000BaseT 1 Ethernet
+
+=== SLIDE 59 ===
+Wireless Networking
+Technologies
+
+=== SLIDE 60 ===
+Wireless Networks
+d Many types exist
+d Technologies differ in
+–
+
+Distance spanned
+
+–
+
+Data rates
+
+–
+
+Physical characteristics of electromagnetic energy
+
+–
+
+*
+
+Ability to permeate obstructions like walls
+
+*
+
+Susceptibility to interference
+
+Isolated channel vs. shared channel
+
+=== SLIDE 61 ===
+A Taxonomy Of Wireless Networks
+d We use a basic taxonomy to help classify wireless
+technologies
+
+Wireless Networks
+
+Local Area
+Networks (LANs)
+
+Metropolitan Area
+Networks (MANs)
+
+Wide Area
+Networks (WANs)
+
+Personal Area
+Networks (PANs)
+
+d Note: the terminology is qualitative because some
+technologies span multiple categories
+
+=== SLIDE 62 ===
+Personal Area Network (PAN)
+d Terminology used primarily with wireless networks
+d Spans short distance
+d Dedicated to a single user (not shared)
+d Example PAN technologies
+Type
+Purpose
+21 22222222222222222222222222222222222222222222222222222222222222222222
+1 Communication over a short distance between a
+1 Bluetooth 1 small peripheral device such as a headset or mouse
+and
+a
+system
+such
+as
+a
+cell
+phone
+or
+a
+computer
+Line-of-sight
+communication
+between
+a
+small
+device,
+1 InfraRed 1 often a hand-held controller, and a nearby system such 1
+1 as a computer or entertainment center
+1 Communication over distances about as large as a
+1 ZigBee 1 residence, which allows electrical appliances to connect 1
+1 to the Smart Grid
+
+=== SLIDE 63 ===
+ISM Wireless Bands
+d ISM stands for Industrial, Scientific, and Medical
+d Region of the electromagnetic spectrum available for use
+without license
+d Used for wireless LANs and PANs (e.g., cordless phones)
+d Three separate bands
+83.6 MHz
+bandwidth
+
+26 MHz
+bandwidth
+
+MHz
+
+MHz
+
+2.4
+GHz
+
+125 MHz
+bandwidth
+
+2.484
+GHz
+
+5.725
+GHz
+
+5.850
+GHz
+
+Unlicensed does not mean unregulated.
+
+=== SLIDE 64 ===
+Wireless LANs And Wi-Fi
+d Variety of wireless LANs have been created
+d Vendors moved to open standards in 1990s, with IEEE
+providing most of the standards under 802.11
+d In 1999, vendors formed Wi-Fi Alliance
+d Example IEEE wireless standards
+1 Frequency 1
+1 Modulation 1 Multiplexing 1
+IEEE
+Data
+Band
+Rate
+1 Standard 1
+1 Technique 1 Technique 1
+1 2.4 GHz 1
+1 or 2 Mbps
+FSK
+DSSS
+original
+2.4 GHz 1
+1 or 2 Mbps
+FSK
+FHSS
+1 802.11 1222222222222222222222222222222222222222222222222222222222222
+InfraRed
+or
+Mbps
+PPM
+–
+none
+–
+PSK
+DSSS
+1 802.11b 1 2.4 GHz 1 5.5 and 11 Mbps 1
+1 802.11g 1 2.4 GHz 1 22 and 54 Mbps 1
+various
+OFDM
+1 802.11n 1 2.4 GHz 1 54 to 600 Mbps 1
+various
+OFDM
+
+=== SLIDE 65 ===
+Spread Spectrum Transmission
+d Uses multiple frequencies for a single channel
+d Can increase performance or provide immunity to noise
+d Major spread spectrum techniques
+2 222222222222222222222222222222222222222222222222222222222222222222
+1 Name 1 Expansion 1
+Description
+21 222222222222222222222222222222222222222222222222222222222222222222
+1 Direct
+1 Similar to CDMA where a sender multiplies 1
+1 DSSS 1 Sequence
+1 the outgoing data by a sequence to form
+Spread
+multiple
+frequencies
+and
+the
+receiver
+1 Spectrum
+1 multiplies by the same sequence to decode 1
+21 222222222222222222222222222222222222222222222222222222222222222222
+1 Frequency
+1 A sender uses a sequence of frequencies 1
+1 FHSS 1 Hopping
+1 to transmit data, and a receiver uses the
+Spread
+same
+sequence
+of
+frequencies
+to
+extract
+1 Spectrum
+1 data
+21 222222222222222222222222222222222222222222222222222222222222222222
+1 Orthogonal 1 A frequency division multiplexing scheme 1
+1 OFDM 1 Frequency
+1 where the transmission band is divided
+Division
+into
+many
+carriers
+in
+such
+a
+way
+that
+1 Multiplexing 1 the carriers do not interfere
+
+=== SLIDE 66 ===
+More IEEE Wireless LAN Standards
+1 Standard 1
+Purpose
+21 222222222222222222222222222222222222222222222222222222222222222222
+1 Improved quality of service, such as a guarantee of
+802.11e
+1 low jitter
+1 802.11h 1 Like 802.11a, but adds control of spectrum and power 1
+1 (primarily intended for use in Europe)
+1 Enhanced security, including Advanced Encryption
+1 802.11i 1 Standard; the full version is known as WPA2
+1 Will provide radio resource management, including
+1 802.11k 1
+1 transmission power
+Data
+rate
+over
+Mbps
+to
+handle
+multimedia
+(video)
+802.11n
+1 applications (may be 500 Mbps)
+21 222222222222222222222222222222222222222222222222222222222222222222
+1 Dedicated Short-Range Communication (DSRC) among 1
+1 802.11p 1
+vehicles
+on
+a
+highway
+and
+vehicle-to-roadside
+Improved
+ability
+to
+roam
+among
+access
+points
+without
+1 802.11r 1
+1 losing connectivity
+21 222222222222222222222222222222222222222222222222222222222222222222
+1 Proposed for a mesh network in which a set of nodes 1
+1 802.11s 1 automatically form a network and pass packets
+
+=== SLIDE 67 ===
+Wireless LAN Architecture
+d IEEE defines two possible modes for wireless LAN
+communication
+d Infrastructure mode
+–
+
+Wireless devices communicate through an access point
+(AP)
+
+–
+
+APs connect to each other and (usually) the Internet
+
+–
+
+Typical uses: corporate wireless LAN, Internet cafe
+
+d Ad hoc mode
+–
+
+Direct communication among wireless devices
+
+–
+
+Forwarding possible
+
+–
+
+Seldom used
+
+=== SLIDE 68 ===
+Illustration Of Infrastructure Mode Wireless LAN
+d Basic Service Set (BSS) for an AP is defined as set of devices
+that can hear the AP
+d APs interconnect through wired network
+range of
+access point
+
+interconnect such as a switch
+wireless
+computer
+
+access point
+
+AP
+
+AP
+
+AP
+
+BSS #1
+
+BSS #2
+
+BSS #3
+
+=== SLIDE 69 ===
+Practical Considerations And Association
+d In practice BSSs can overlap (given wireless device can hear
+more than one AP)
+switch
+router
+to Internet
+computer
+in range
+of two APs
+AP
+
+AP
+
+AP
+
+BSS #1
+
+BSS #2
+
+BSS #3
+
+d To solve the problem each device associates with one AP at
+any time
+
+=== SLIDE 70 ===
+Practical Considerations: Wi-Fi Channels
+d 11 channels defined for North America in 2.4 GHz range
+d Bad news: 22 MHz bandwidth means channels overlap
+1: 2.412
+3: 2.422
+5: 2.432
+7: 2.442
+9: 2.452
+11: 2.462
+2: 2.417
+4: 2.427
+6: 2.437
+8: 2.447
+10: 2.457
+
+22 MHz
+
+d Good news: channels 1, 6, and 11 can operate simultaneously
+with no interference
+
+=== SLIDE 71 ===
+Addresses In 802.11 Frame Format
+d 802.11 frame is not the same as an Ethernet frame
+d Each 802.11 frame includes four MAC addresses
+–
+
+Source (e.g., wireless device)
+
+–
+
+Destination AP (associated AP)
+
+–
+
+Router along the path to the Internet
+
+–
+
+Extra address for ad hoc mode
+
+CTL DUR
+
+Address 1
+(destination)
+
+Address 2
+(source)
+
+Address 3
+(dest. 2)
+
+AP or wireless
+computer’s MAC
+
+sender’s
+MAC address
+
+router’s
+MAC address
+
+
+SEQ
+
+
+Address 4
+
+Payload
+(0 to 2312 bytes)
+
+CRC
+
+used in
+ad hoc mode
+
+=== SLIDE 72 ===
+Coordination Among Access Points
+d Coordinated approach
+–
+
+Initial design
+
+–
+
+Similar to cellular telephone
+
+–
+
+APs communicate to achieve smooth handoff
+
+d Uncoordinated approach
+–
+
+Later alternative
+
+–
+
+APs do not communicate
+
+–
+
+Wireless device changes association when communication
+with an AP lost
+
+–
+
+Lower overall cost
+
+=== SLIDE 73 ===
+CSMA/ CA Protocol (Review)
+d Alternative to CSMA/CD used in wireless LANs
+d Allows stations within range of communicating pair to know
+when communication starts
+d Requires exchange of Ready-To-Send (RTS) and Clear-ToSend (CTS) messages
+d Delay associated with each message to ensure protocol is
+efficient and correct
+
+=== SLIDE 74 ===
+CSMA/ CA Protocol Details
+d SIFS — Short Inter-Frame Space of 10 µsec
+d DIFS — Distributed Inter-Frame Space of 50 µsec
+d Slot Time of 20 µsec
+
+DIFS
+RTS
+SIFS
+
+CTS
+SIFS
+
+data
+
+SIFS
+
+ACK
+
+time
+
+time
+
+=== SLIDE 75 ===
+Wireless MAN Technology (WiMax)
+d WiMax standard, IEEE 802.16, provides two types
+–
+
+Fixed (802.16-2004) — endpoint does not move
+
+–
+
+Mobile (802.16e-2005) — endpoint moves
+
+d Uses
+
+
+– High-speed interconnection for nomadic users
+
+
+
+
+
+
+– Last-mile alternative to DSL or cable modems
+– Unified data and telecommunications access
+
+
+
+
+
+Access
+
+
+
+– As a backup for a site’s Internet connection
+
+
+
+
+
+
+Interconnect
+– Backhaul from Wi-Fi access points to a provider 1
+
+
+– Private connections among sites of a company
+
+
+
+
+
+
+– Connection between small and large ISPs
+
+=== SLIDE 76 ===
+Illustration Of WiMax Uses
+d Fixed type of WiMax used for high-capacity backhaul
+requires Line-Of-Sight (LOS)
+
+service
+provider
+
+NLOS access
+
+LOS
+backhaul
+
+wired connection
+
+Wi-Fi region
+
+=== SLIDE 77 ===
+Standards For Wireless PANs
+d Used in industrial as well as consumer products
+d Remote control protocols optimized for short commands
+(do not need high data rate)
+2 22222222222222222222222222222222222222222222222222222222222222222222
+1 Standard 1
+Purpose
+21 22222222222222222222222222222222222222222222222222222222222222222222
+1 802.15.1a 1 Bluetooth technology (1 Mbps; 2.4 GHz)
+21 22222222222222222222222222222222222222222222222222222222222222222222
+1 802.15.2 1 Coexistence among PANs (noninterference)
+21 22222222222222222222222222222222222222222222222222222222222222222222
+1 802.15.3 1 High rate PAN (55 Mbps; 2.4 GHz)
+12 22222222222222222222222222222222222222222222222222222222222222222222
+802.15.3a
+Ultra
+Wideband
+(UWB)
+high
+rate
+PAN
+(110
+Mbps;
+2.4
+GHz)
+12 22222222222222222222222222222222222222222222222222222222222222222222
+802.15.4 1 ZigBee technology – low data rate PAN for remote control 1
+12 22222222222222222222222222222222222222222222222222222222222222222222
+1 802.15.4a 1 Alternative low data rate PAN that uses low power
+
+=== SLIDE 78 ===
+Other Short-Distance Wireless Technologies
+d Infrared Data Association (IrDA)
+–
+
+Family of standards (data rate of 2.4 Kbps to 16 Mbps)
+
+–
+
+Range of several meters
+
+–
+
+Directional transmission with cone covering 30 degrees
+
+–
+
+Generally low power consumption
+
+d Radio Frequency IDentification (RFID) tags
+–
+
+Over 140 RFID standards exist
+
+–
+
+Passive RFID tags draw power from reader’s signal
+
+–
+
+Active RFID tags contain a multi-year battery
+
+–
+
+Frequencies from less than 100 MHz to 868-954 MHz
+
+=== SLIDE 79 ===
+Wireless WAN Technologies
+d Cellular communication systems
+d Satellite communication systems
+
+=== SLIDE 80 ===
+Cellular Telephones And Data Networking
+d There are more cell phones in the world than computers
+d The smart phone is now the network interface of choice in
+all emerging countries
+d Cell phone providers have switched to the Internet protocols
+
+=== SLIDE 81 ===
+Current Cellular System Architecture
+d Cell has a tower that connects to mobile switching system
+d Each mobile switching system connects to PSTN or Internet
+Public Switched Telephone Network plus a connection to the Internet
+
+Mobile
+Switching
+Centers
+
+cell
+
+wired connection
+
+...
+
+...
+
+d Handoff decision made by infrastructure
+
+=== SLIDE 82 ===
+Theoretical And Actual Cells
+
+theoretical
+
+actual
+
+d Problems include: overlap and gaps
+
+=== SLIDE 83 ===
+Cell Size And Expected Cell Phone Density
+d Textbook diagrams show equal-size cells
+d In practice, cell size related to expected number of cell
+phones
+d Smaller cells used in high-population areas
+d Larger cells used in rural areas
+
+=== SLIDE 84 ===
+Frequency Assignment
+d Goal: minimize interference
+d Principle
+Interference can be minimized if an adjacent pair of cells do not
+use the same frequency.
+
+d Method: devise an assignment of frequencies such that two
+adjacent cells are not assigned the same frequency
+d Technique: create a pattern that can be repeated
+d Known as a cluster approach
+
+=== SLIDE 85 ===
+Example Clusters That Are Used
+
+3-cell
+
+4-cell
+
+7-cell
+
+12-cell
+
+d Each cell in cluster assigned a unique frequency
+d When replicated, clusters cover 2-dimensional surface
+d Mathematically, the concept is tiling the plane
+
+=== SLIDE 86 ===
+Illustration Of Cluster Replication
+A
+A
+A
+F
+
+F
+B
+
+E
+
+E
+D
+A
+F
+
+F
+B
+C
+
+E
+
+D
+
+F
+
+B
+G
+
+E
+
+G
+C
+
+C
+
+A
+
+B
+
+E
+
+G
+
+G
+
+C
+
+A
+
+B
+
+E
+
+D
+
+C
+
+A
+
+B
+
+E
+
+G
+
+C
+D
+
+F
+
+G
+
+B
+
+E
+
+D
+
+F
+
+B
+G
+
+C
+
+A
+
+D
+F
+
+G
+
+C
+
+A
+
+B
+
+E
+
+G
+
+F
+
+C
+D
+
+D
+
+D
+
+d No pair of adjacent cells assigned the same frequency
+
+=== SLIDE 87 ===
+Four Generations Of Cellular Networks
+d 1G used analog (1970s - 1980s)
+d 2G and 2.5G use digital signals for voice (1990s-)
+d 3G and 3.5G also include data transfer at rates of 400 Kbps
+through 2 Mbps (2000s-)
+d 4G offers higher data rates and support for real-time
+multimedia such as television (2008-)
+
+=== SLIDE 88 ===
+Cellular Technologies
+d Many competing standards
+d European Conference Of Postal and Telecommunications
+Administrators chose a TDMA technology known as Global
+System for Mobile Communications (GSM) for Europe
+d In US, each carrier created its own standards
+–
+
+Motorola created iDEN using TDMA
+
+–
+
+Others adopted IS-95A, which uses CDMA
+
+d Japan chose PDC, which uses TDMA
+
+=== SLIDE 89 ===
+Summary Of 2G Wireless Standards
+1 Approach 1
+1 Generation 1
+Standard
+21 2222222222222222222222222222222222222222222
+1 GSM
+2G
+1 GPRS
+2.5G
+GSM
+EDGE
+(EGPRS)
+2.5G
+EDGE
+Evolution
+2.5G
+HSCSD
+2.5G
+IS-95A
+2G
+1 CDMA
+1 IS-95B
+2.5G
+21 2222222222222222222222222222222222222222222
+1 iDEN
+2G
+1 TDMA
+1 IS-136
+2G
+PDC
+2G
+
+d Note: 2.5G standards extend 2G standards by adding some
+features of 3G
+
+=== SLIDE 90 ===
+Third Generation Standards
+d 2G standards were consolidated and extended:
+1 Approach 1 Standard 1
+Successor To
+1 IS-136, IS-95A, EDGE, PDC 1
+UMTS
+1 WCDMA
+1 HSDPA 1
+UMTS
+1 1xRTT 1
+IS-95B
+CDMA
+EVDO
+1xRTT
+EVDV
+1xRTT
+
+d EVDO and EVDV data transfer standards evolved at
+approximately the same time to deliver data at 2.4 Mbps or
+3.1 Mbps
+d HSDPA can achieve 14 Mbps
+
+=== SLIDE 91 ===
+Fourth Generation Standards
+d Initially, the ITU insisted on high performance before using
+the term 4G
+d Eventually, the ITU allowed intermediate technologies “to be
+advertised” as 4G
+Classification
+Standard
+1 Can be advertised as 4G 1 HSPA+, HTC Evo 4G, LTE, WiMAX 1
+1 Adheres to IMT-Advanced 1 LTE Advanced, WiMAX Advanced 1
+
+=== SLIDE 92 ===
+Review Of Satellite Types
+d Low Earth Orbit (LEO)
+–
+
+Appears to move across the sky
+
+–
+
+Requires a cluster of 66 satellites to cover the earth
+surface
+
+d Medium Earth Orbit (MEO)
+–
+
+Covers the poles
+
+–
+
+Seldom used for general communication
+
+d Geostationary Earth Orbit (GEO)
+–
+
+Appears to remain stationary in the sky
+
+–
+
+Requires only three satellites to cover the earth’s surface
+
+=== SLIDE 93 ===
+GEO Coverage Of The Earth’s surface
+d In the best case, only three satellites needed
+
+EARTH
+
+satellite
+coverage
+(footprint)
+satellites
+
+d Surface area covered known as footprint
+d Ratio of distance to earth’s diameter approximately to scale
+
+=== SLIDE 94 ===
+VSAT Satellite Technology
+d Stands for Very Small Aperture Terminal
+d Parabolic antenna focuses incoming signal
+incoming energy
+cross section
+of dish antenna
+
+receiver
+
+d Example use: connect a company’s retail stores
+
+=== SLIDE 95 ===
+Frequency Bands Used With VSAT Technology
+d Multiple bands available
+d Each band has disadvantages
+1 Band 1 Frequency 1 Footprint 1 Signal Strength 1 Effect Of Rain 1
+1 C Band 1
+3 - 7 GHz 1 Large
+Low
+Medium
+Ku
+10 - 18 GHz
+Medium
+Medium
+Moderate
+1 18 - 31 GHz 1 Small
+Ka
+High
+Severe
+
+=== SLIDE 96 ===
+Global Positioning System (GPS)
+d 24 satellites
+d Arranged in 6 orbital planes
+d Civilian version has accuracy between 20 and 2 meters
+d Relevance to data networking
+–
+
+Provides accurate time
+
+–
+
+Can be used to synchronize remote points in a data
+network (needed by some protocols)
+
+=== SLIDE 97 ===
+Software Defined Radio
+d Also known as a software programmable radio
+d New approach emerging from research
+d Exciting possibilities
+d Replaces fixed radio components with mechanism that can be
+controlled by a programmable processor
+d Can make better use of spectrum
+d Potential downside: user might choose parameters that
+interfere with police or emergency vehicles
+
+=== SLIDE 98 ===
+Features Controlled In A Software Radio
+Feature
+Description
+21 2222222222222222222222222222222222222222222222222222222222222222222222
+1 The exact set of frequencies used at a given time
+Frequency
+21 2222222222222222222222222222222222222222222222222222222222222222222222
+Power
+The amount of power the transmitter emits
+1 The signal and channel coding and modulation
+Modulation
+Multiplexing
+Any
+combination
+of
+CDMA,
+TDMA,
+FDMA
+and
+others
+Signal
+Direction
+Antennas
+can
+be
+tuned
+for
+a
+specific
+direction
+1 MAC Protocol 1 All aspects of framing and MAC addressing
+
+d Enabling technologies
+–
+
+Tunable analog filters to select frequencies and control
+power
+
+–
+
+Multiple antenna management to select direction
+
+=== SLIDE 99 ===
+Multiple Antenna Management
+d Needed because
+–
+
+No single antenna handles all frequencies
+
+–
+
+Directional signals important in focusing communication
+
+d Multiple-Input Multiple-Output (MIMO) technology can aim
+transmission or reception
+
+=== SLIDE 100 ===
+LAN Extensions
+
+=== SLIDE 101 ===
+Network Design Tradeoffs
+d Network technology engineered for
+–
+
+Distance spanned
+
+–
+
+Maximum data rate
+
+–
+
+Cost
+
+d LAN technologies maximize data rate and minimize cost
+d General principle
+A maximum length specification is a fundamental part of LAN
+technology; LAN hardware will not work correctly over wires
+that exceed the bound.
+
+=== SLIDE 102 ===
+Technologies That Extend LANs
+d Variety of techniques have been invented to extend LANs
+d Three key extension technologies
+–
+
+Fiber modems
+
+–
+
+Repeaters
+
+–
+
+Bridges
+
+=== SLIDE 103 ===
+Fiber Modems
+d Communicate over an optical fiber
+d Can span long distance
+d Provide standard network interface (e.g., Ethernet)
+d Can be used to extend connection between computer and
+network
+d Illustration of an extended network connection
+connection
+from computer
+
+optical fiber
+Ethernet hub
+or switch
+
+fiber modem
+
+
+fiber modem
+
+=== SLIDE 104 ===
+Repeaters
+d Operate at layer 1 (do not understand packets)
+d Repeat and amplify signals
+d Low cost
+d Example use: extended infrared sensor on a cable box
+connection to
+cable box
+
+extended connection
+remote
+sensor
+
+Cable box
+repeater
+
+d Disadvantage: amplifies and repeats noise
+
+=== SLIDE 105 ===
+Switches and
+Switched Networks
+
+=== SLIDE 106 ===
+Bridge
+d Originally sold as stand-alone device to extend two LAN
+segments
+d Operates at layer 2
+d Can connect two or more segments
+d Listens in promiscuous mode on each segment and sends
+copy of each frame to other segments
+d Does not copy noise, collisions, or frames that are incorrectly
+formed
+d Makes connected segments appear to be a single, large LAN
+d Uses source MAC address in frames to learn computer
+locations automatically, and uses destination MAC address to
+filter frames
+
+=== SLIDE 107 ===
+Illustration Of A Bridge Learning
+LAN segment
+
+hub 1
+
+hub 2
+
+bridge
+
+A
+
+B
+
+C
+
+Event
+Bridge boots
+A sends to B
+B sends to A
+X broadcasts
+Y sends to A
+Y sends to X
+C sends to Z
+Z sends to X
+
+
+X
+
+Segment 1
+–
+A
+A, B
+A, B
+A, B
+A, B
+A, B, C
+A, B, C
+
+Segment 2
+–
+–
+–
+X
+X, Y
+X, Y
+X, Y
+X, Y, Z
+
+
+Y
+
+Z
+
+Frame Sent
+–
+Both Segments
+Segment 1 only
+Both Segments
+Both Segments
+Segment 2 only
+Both Segments
+Segment 2 only
+
+=== SLIDE 108 ===
+General Principle
+
+Because a bridge permits simultaneous activity on attached
+segments, a pair of computers on one segment can communicate
+at the same time as a pair of computers on another segment.
+
+d Each segment forms a separate collision domain
+
+=== SLIDE 109 ===
+A Problem With Bridges
+d A bridge always forwards broadcast and multicast frames
+d Consider four bridges used to connect four LAN segments in
+a loop
+hub 1
+
+hub 2
+
+Bridge 1
+
+hub 3
+
+Bridge 2
+
+hub 4
+
+Bridge 3
+
+Bridge 4
+
+d What happens if a computer attached to one of the segments
+sends a broadcast frame?
+Copies of the frame cycle around the bridges forever!
+
+=== SLIDE 110 ===
+Distributed Spanning Tree
+d Prevents a packet from circulating around a cycle of bridges
+d Initial protocol developed by Perlman at Digital Equipment
+Corporation
+d Executed by each bridge when the bridge boots
+d Allows bridges to break a forwarding cycle
+d Name Spanning Tree Protocol (STP) applies to basic
+protocol
+d Many variants have been created with extended names
+
+=== SLIDE 111 ===
+How STP Works
+d Executed at startup
+d Distributed algorithm
+–
+
+Each bridge runs it independently
+
+–
+
+No central coordination
+
+d Algorithm guaranteed to converge quickly
+d No data packets forwarded until STP finishes
+
+=== SLIDE 112 ===
+Steps Taken By STP
+d Bridges exchange a series of STP messages (frames) that are
+used to
+–
+
+Elect a root bridge
+
+–
+
+Select a shortest path to the root
+
+d Each bridge disables forwarding broadcast or multicast
+except along the selected path
+d Result is a tree
+
+=== SLIDE 113 ===
+Bridging Is Alive And Well
+d Stand-alone bridge devices are seldom used
+d Bridge technology is now incorporated into other devices
+–
+
+DSL modems
+
+–
+
+Cable modems
+
+–
+
+Wi-Fi “repeaters”
+
+–
+
+Satellite systems
+
+=== SLIDE 114 ===
+Switching
+
+=== SLIDE 115 ===
+Layer 2 Switch
+d Physically similar to a layer 2 hub
+–
+
+Network device
+
+–
+
+Connects multiple computers
+
+–
+
+Computers appear to be attached to a LAN segment
+
+d Logically similar to a set of bridged networks
+–
+
+Switch understands packets, not just signals
+
+–
+
+No contention, and no need for CSMA / CD
+
+–
+
+Ports operate in parallel
+
+–
+
+Switch can include services that examine packets
+
+=== SLIDE 116 ===
+Logical Function Of A Switch
+computers
+
+port on
+the switch
+
+switch
+
+simulated
+bridge
+
+simulated Ethernet segment
+
+d Switch offers same advantage as bridged networks: multiple
+transfers can occur simultaneously
+
+=== SLIDE 117 ===
+Actual Switch Architecture
+computers
+
+interfaces
+
+switch
+
+fabric
+(interconnect)
+
+d Switching fabric used for high throughput
+
+=== SLIDE 118 ===
+Thought Problem
+Suppose a computer is unplugged from a port on a Layer 2
+switch and plugged into another port. Suppose the computer
+does not send any packets. Will the computer continue to
+receive unicast frames that are sent to it? Why or why not?
+
+=== SLIDE 119 ===
+Virtual Local Area Network (VLAN) Switch
+d Physically
+–
+
+Similar to a conventional Layer 2 switch
+
+–
+
+Has ports to which computer can connect
+
+d Logically
+–
+
+Manager can configure one or more broadcast domains
+
+–
+
+Each port assigned to one broadcast domain
+
+d Frame sent to broadcast or multicast address only propagated
+to ports in the same broadcast domain
+
+=== SLIDE 120 ===
+Networking Technologies:
+Past And Present
+
+=== SLIDE 121 ===
+A Wide Variety of Networking Technologies
+d LAN technologies
+–
+
+Token ring (esp., IBM Token Ring)
+
+–
+
+FDDI/ CDDI
+
+d WAN technologies
+–
+
+X.25
+
+–
+
+Frame Relay
+
+–
+
+ATM
+
+–
+
+ISDN
+
+–
+
+MPLS
+
+d See Chapter 19 for a longer list
+
+=== SLIDE 122 ===
+Asynchronous Transfer Mode (ATM)
+(continued)
+d QoS in ATM
+–
+
+Specified for each transfer (i.e., each TCP connection)
+
+–
+
+Required setup time
+
+–
+
+Meant each switch maintained state
+
+–
+
+Was difficult/impossible to enforce at high speed
+
+d Despite the failure of ATM, proponents still argue that
+Internet needs QoS
+
+=== SLIDE 123 ===
+Summary
+d Wireless networks include PANs, LANs, and WANs,
+d Cellular telephones are using packet technology
+d Satellite can deliver data through a dish antenna
+d Software-defined radio adds flexibility to wireless devices
+d LAN extensions include repeaters and bridges
+d Once stand-alone devices, bridges are now incorporated into
+other devices
+d Layer 2 switch acts like bridged networks
+
+=== SLIDE 124 ===
+Questions?
+
