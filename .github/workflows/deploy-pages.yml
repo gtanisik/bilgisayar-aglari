@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install Project Dependencies
+        run: npm ci
+
       - name: Install Marp CLI
         run: npm install -g @marp-team/marp-cli
 
